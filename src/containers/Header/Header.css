@@ -37,10 +37,6 @@ header {
             &:hover {
                background-color: #eac587;
             }
-            &:focus,
-            &:focus-visible {
-               outline: none;
-            }
 
             a {
                font-size: 1rem; 
@@ -52,6 +48,11 @@ header {
 
                &:hover {
                   color: #000000;
+               }
+
+               &:focus,
+               &:focus-visible {
+               outline: none;
                }
             }
          }
