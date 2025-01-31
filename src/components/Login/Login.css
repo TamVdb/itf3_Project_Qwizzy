@@ -1,0 +1,63 @@
+.form-login h2 {
+   margin:0;
+   padding:3rem 0 2rem;
+}
+
+form {
+   display: flex;
+   flex-direction: column;
+   background-color: #19161d;
+   padding:2rem;
+   border-radius: 1rem;
+   max-width:300px;
+   margin: auto;
+   gap:2rem;
+
+   label {
+      display: flex;
+      font-size: 1rem;
+      padding-bottom: 1ch;
+      color:#e8f0fe
+   }
+
+   input {
+      background-color: #e8f0fe;
+      border-radius: 1ch;
+      padding:1ch;
+      font-size: 1rem;
+      border:none;
+      width: 100%;
+      font-family: "Inter", serif !important;
+   }
+
+   button {
+      border-radius: 1ch;
+      padding:1ch;
+      border:none;
+      background-color: #339989;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color:white;
+
+      &:hover {
+         background-color: #449488;
+      }
+   }
+}
+
+p.switch {
+   text-align:center;
+   color: #e8f0fe;
+   margin:1.5rem 0;
+
+   span {
+      cursor: pointer;
+      font-weight: 500; 
+      color: #E0A458; 
+      text-decoration: underline;
+
+      &:hover {
+         color: #eac587;
+      }
+   }
+}

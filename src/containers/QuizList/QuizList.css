@@ -1,0 +1,14 @@
+.quizList-container h2 {
+   text-align: center;
+   color:#FFFBFF;
+   margin:3rem 0;
+}
+
+.quizList {
+   display: flex;
+   max-width: 1280px;
+   width:100%;
+   gap: 2rem;
+   margin:auto;
+   flex-wrap: wrap;
+}
