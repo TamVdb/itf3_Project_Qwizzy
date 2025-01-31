@@ -1,6 +1,7 @@
 .form-login h2 {
-   margin:0;
    padding:3rem 0 2rem;
+   text-align: center;
+   color:#FFFBFF;
 }
 
 form {
@@ -17,37 +18,45 @@ form {
       display: flex;
       font-size: 1rem;
       padding-bottom: 1ch;
-      color:#e8f0fe
+      color:white;
    }
 
    input {
-      background-color: #e8f0fe;
+      background-color: #f4f6fa;
+      border: 1px solid #e6ebf3;
       border-radius: 1ch;
       padding:1ch;
       font-size: 1rem;
-      border:none;
       width: 100%;
       font-family: "Inter", serif !important;
+
+      &:focus,
+      &:focus-visible {
+         border: 1px solid #b3c2dd;
+         outline: none;
+      }
    }
 
    button {
       border-radius: 1ch;
       padding:1ch;
       border:none;
-      background-color: #339989;
+      background-color: #419D78;
       font-size: 1.1rem;
       cursor: pointer;
       color:white;
+      transition: all 0.3s ease;
 
-      &:hover {
-         background-color: #449488;
+      &:hover,
+      &:focus {
+         background-color: rgba(65, 157, 120, 0.9);
       }
    }
 }
 
 p.switch {
    text-align:center;
-   color: #e8f0fe;
+   color: white;
    margin:1.5rem 0;
 
    span {
@@ -57,7 +66,7 @@ p.switch {
       text-decoration: underline;
 
       &:hover {
-         color: #eac587;
+         color: #d98b36;
       }
    }
 }
