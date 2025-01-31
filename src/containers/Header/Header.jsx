@@ -38,7 +38,7 @@ const Header = () => {
             modalType={authModalType}
             onClose={closeAuthModal}
             switchToLogin={switchToLogin}
-            switchToSignup={switchToRegister}
+            switchToRegister={switchToRegister}
          />
          <header>
             <div className="container">

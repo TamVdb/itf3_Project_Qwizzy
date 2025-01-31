@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { loginUser } from '../../services/Auth.service';
 import './Login.css';
 
-const Login = ({ onSwitchToSignup, onSuccessfulConnection }) => {
+const Login = ({ onSwitchToRegister, onSuccessfulConnection }) => {
 
    const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
@@ -17,7 +17,7 @@ const Login = ({ onSwitchToSignup, onSuccessfulConnection }) => {
 
          if (success) {
             console.log('Connexion reussie');
-            window.location.href = '/';
+            // window.location.href = '/';
          } else {
             setError('Identifiants incorrects');
          }
@@ -43,7 +43,7 @@ const Login = ({ onSwitchToSignup, onSuccessfulConnection }) => {
             <button type='submit'>Se connecter</button>
          </form>
          <p className="switch"
-            onClick={onSwitchToSignup}>Pas encore de compte ? <span>S'enregistrer</span></p>
+            onClick={onSwitchToRegister}>Pas encore de compte ? <span>S'enregistrer</span></p>
       </div>
    );
 };

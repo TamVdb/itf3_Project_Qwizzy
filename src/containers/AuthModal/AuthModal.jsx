@@ -18,7 +18,7 @@ const AuthModal = ({
 
             {modalType === 'login' ? (
                <Login
-                  onSwitchToSignup={switchToRegister}
+                  onSwitchToRegister={switchToRegister}
                   onSuccessfulConnection={onClose}
                />
             ) : (
