@@ -2,7 +2,7 @@
 const { VITE_URL_WP } = import.meta.env;
 
 export async function getAllQuizz() {
-   const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/quizzes');
+   const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/quizz');
 
    if (!response.ok) {
       throw new Error('Failed to fetch quizzes');
@@ -14,7 +14,7 @@ export async function getAllQuizz() {
 }
 
 export async function getQuizById(id) {
-   const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/quizzes/' + id);
+   const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/quizz/' + id);
 
    if (!response.ok) {
       throw new Error('Failed to fetch quiz');
