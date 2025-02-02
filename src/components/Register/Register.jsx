@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { registerUser } from '../../services/Auth.service';
 import './Register.css';
 
-const Register = ({ onSwitchToLogin, onSuccessfulConnection }) => {
+const Register = ({ onSwitchToLogin }) => {
 
    const [username, setUsername] = useState('');
    const [email, setEmail] = useState('');
@@ -18,9 +18,7 @@ const Register = ({ onSwitchToLogin, onSuccessfulConnection }) => {
 
          if (success) {
             console.log('Inscription reussie');
-            // window.location.href = '/';
-         } else {
-            setError('Identifiants incorrects');
+            onSwitchToLogin();
          }
       } catch (err) {
          setError('Une erreur est survenue');

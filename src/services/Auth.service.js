@@ -26,17 +26,15 @@ export async function loginUser(username, password) {
 
 export async function registerUser(username, email, password) {
    try {
-      const response = await fetch(`${VITE_URL_WP}/wp-json/wp/v2/users`, {
+      const response = await fetch(VITE_URL_WP + 'wp-json/custom/v1/register', {
          method: 'POST',
          headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Basic ' + btoa(`${VITE_WP_ADMIN_USER}:${VITE_WP_ADMIN_PASSWORD}`)
          },
          body: JSON.stringify({
             username,
             email,
-            password,
-            roles: ["subscriber"],
+            password
          }),
       });
 

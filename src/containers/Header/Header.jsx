@@ -6,6 +6,7 @@ const Header = () => {
 
    const [isAuthModalVisible, setIsAuthModalVisible] = useState(false);
    const [authModalType, setAuthModalType] = useState("login");
+   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
    const handleLoginModal = (e) => {
       e.preventDefault();
@@ -31,6 +32,11 @@ const Header = () => {
       setAuthModalType('register');
    };
 
+   const onSuccessfulConnection = () => {
+      setIsLoggedIn(true);
+      setIsAuthModalVisible(false);
+   };
+
    return (
       <>
          <AuthModal
@@ -45,8 +51,14 @@ const Header = () => {
                <div className="logo">
                   <img src="http://wp-quizz.local/wp-content/uploads/2025/01/qwizzy-logo.png" alt="Qwizzy Logo" />Qwizzy</div>
                <ul>
-                  <li><a href="#" onClick={handleLoginModal} >Connexion</a></li>
-                  <li><a href="#" onClick={handleRegisterModal} >Inscription</a></li>
+                  {isLoggedIn ? (
+                     <li>Bienvenue</li> // Affiche "Bienvenue" si connecté
+                  ) : (
+                     <>
+                        <li><a href="#" onClick={handleLoginModal}>Connexion</a></li>
+                        <li><a href="#" onClick={handleRegisterModal}>Inscription</a></li>
+                     </>
+                  )}
                </ul>
             </div>
          </header>

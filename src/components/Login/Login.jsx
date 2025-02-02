@@ -17,6 +17,7 @@ const Login = ({ onSwitchToRegister, onSuccessfulConnection }) => {
 
          if (success) {
             console.log('Connexion reussie');
+            onSuccessfulConnection();
             // window.location.href = '/';
          } else {
             setError('Identifiants incorrects');
