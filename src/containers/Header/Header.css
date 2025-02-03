@@ -29,7 +29,7 @@ header {
          align-items: center;
          gap:1rem;
 
-         li {
+         li:not(.welcome) {
             background-color: #E0A458; 
             border-radius: 1rem;
             transition: all 0.3s ease;

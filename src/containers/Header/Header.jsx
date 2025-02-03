@@ -1,5 +1,5 @@
 import './Header.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import AuthModal from '../AuthModal/AuthModal';
 
 const Header = () => {
@@ -7,6 +7,16 @@ const Header = () => {
    const [isAuthModalVisible, setIsAuthModalVisible] = useState(false);
    const [authModalType, setAuthModalType] = useState("login");
    const [isLoggedIn, setIsLoggedIn] = useState(false);
+   const [username, setUsername] = useState('');
+
+   useEffect(() => {
+      const token = localStorage.getItem('token');
+      const storedUsername = localStorage.getItem('username');
+      if (token && storedUsername) {
+         setIsLoggedIn(true);
+         setUsername(storedUsername);
+      }
+   }, []);
 
    const handleLoginModal = (e) => {
       e.preventDefault();
@@ -33,8 +43,16 @@ const Header = () => {
    };
 
    const onSuccessfulConnection = () => {
+      setUsername(localStorage.getItem('username'));
       setIsLoggedIn(true);
       setIsAuthModalVisible(false);
+   };
+
+   const handleLogout = () => {
+      setIsLoggedIn(false);
+      setUsername('');
+      localStorage.removeItem('token');
+      localStorage.removeItem('username');
    };
 
    return (
@@ -45,6 +63,7 @@ const Header = () => {
             onClose={closeAuthModal}
             switchToLogin={switchToLogin}
             switchToRegister={switchToRegister}
+            onSuccessfulConnection={onSuccessfulConnection}
          />
          <header>
             <div className="container">
@@ -52,7 +71,10 @@ const Header = () => {
                   <img src="http://wp-quizz.local/wp-content/uploads/2025/01/qwizzy-logo.png" alt="Qwizzy Logo" />Qwizzy</div>
                <ul>
                   {isLoggedIn ? (
-                     <li>Bienvenue</li> // Affiche "Bienvenue" si connecté
+                     <>
+                        <li className="welcome">Bienvenue {username}</li>
+                        <li><a href="#" onClick={handleLogout}>Déconnexion</a></li>
+                     </>
                   ) : (
                      <>
                         <li><a href="#" onClick={handleLoginModal}>Connexion</a></li>
