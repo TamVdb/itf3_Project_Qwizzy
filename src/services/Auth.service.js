@@ -1,52 +1,56 @@
-const { VITE_URL_WP, VITE_WP_ADMIN_USER, VITE_WP_ADMIN_PASSWORD } = import.meta.env;
+import { jwtDecode } from 'jwt-decode';
+const { VITE_URL_WP } = import.meta.env;
 
-export async function loginUser(username, password) {
-
-   const formData = new URLSearchParams();
-   formData.append('log', username);
-   formData.append('pwd', password);
-
+export const loginUser = async (username, password) => {
    try {
-
-      const response = await fetch(VITE_URL_WP + 'wp-login.php', {
+      const response = await fetch(VITE_URL_WP + 'wp-json/simple-jwt-login/v1/auth', {
          method: 'POST',
-         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-         },
-         body: formData.toString(),
-         credentials: 'include',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({ username, password })
       });
 
-      return response.ok;
-   } catch (err) {
-      console.error('Erreur lors de la connexion :', err);
-      throw err;
-   }
-}
+      const data = await response.json();
 
-export async function registerUser(username, email, password) {
+      // Store JWT Token in local storage
+      localStorage.setItem('token', data.data.jwt);
+
+      // Decode JWT Token
+      const decodedToken = jwtDecode(data.data.jwt);
+      const usernameFromToken = decodedToken.username;
+
+      // Store username in local storage
+      localStorage.setItem('username', usernameFromToken);
+
+      return true;
+
+   } catch (error) {
+      console.error("Erreur de connexion:", error);
+      return false;
+   }
+};
+
+export const registerUser = async (username, email, password) => {
    try {
-      const response = await fetch(VITE_URL_WP + 'wp-json/custom/v1/register', {
+      const response = await fetch(VITE_URL_WP + 'wp-json/simple-jwt-login/v1/users', {
          method: 'POST',
-         headers: {
-            'Content-Type': 'application/json',
-         },
+         headers: { 'Content-Type': 'application/json', },
          body: JSON.stringify({
-            username,
-            email,
-            password
+            email: email,
+            password: password,
+            username: username,
+            AUTH_KEY: 'THISISMySpeCiaLAUthCodeForTheApi'
          }),
       });
 
       const data = await response.json();
 
-      if (!response.ok) {
-         throw new Error(data.message || "Erreur lors de l'inscription");
+      if (response.ok) {
+         return { success: true, message: "Inscription réussie !" };
+      } else {
+         return { success: false, message: data.message || "Une erreur s'est produite." };
       }
-
-      return data; // Renvoie l'utilisateur créé
    } catch (error) {
-      console.error("Erreur lors de l'inscription :", error);
-      throw error;
+      console.error('Erreur lors de la connexion :', err);
+      throw err;
    }
-}
+};
