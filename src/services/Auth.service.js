@@ -1,4 +1,3 @@
-import { jwtDecode } from 'jwt-decode';
 const { VITE_URL_WP } = import.meta.env;
 
 export const loginUser = async (username, password) => {
@@ -14,12 +13,9 @@ export const loginUser = async (username, password) => {
       // Store JWT Token in local storage
       localStorage.setItem('token', data.data.jwt);
 
-      // Decode JWT Token
-      const decodedToken = jwtDecode(data.data.jwt);
-      const usernameFromToken = decodedToken.username;
+      //Store username in local storage
+      localStorage.setItem('username', username);
 
-      // Store username in local storage
-      localStorage.setItem('username', usernameFromToken);
 
       return true;
 
