@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { loginUser } from '../../services/Auth.service';
+import { useId } from 'react';
 import './Login.css';
 
 const Login = ({ onSwitchToRegister, onSuccessfulConnection }) => {
@@ -7,6 +8,8 @@ const Login = ({ onSwitchToRegister, onSuccessfulConnection }) => {
    const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
    const [error, setError] = useState(null);
+
+   const inputId = useId();
 
    const handleLoginSubmit = async (e) => {
       e.preventDefault();
@@ -18,7 +21,7 @@ const Login = ({ onSwitchToRegister, onSuccessfulConnection }) => {
          if (success) {
             console.log('Connexion reussie');
             onSuccessfulConnection();
-            window.location.reload();
+            // window.location.reload();
          } else {
             setError('Identifiants incorrects');
          }
@@ -34,11 +37,11 @@ const Login = ({ onSwitchToRegister, onSuccessfulConnection }) => {
          <form onSubmit={handleLoginSubmit}>
             <div>
                <label htmlFor='username'>Nom d'utilisateur</label>
-               <input id='username' type='text' value={username} onChange={(e) => setUsername(e.target.value)} />
+               <input id={inputId + 'username'} type='text' value={username} onChange={(e) => setUsername(e.target.value)} />
             </div>
             <div>
                <label htmlFor='password'>Mot de passe</label>
-               <input id='password' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+               <input id={inputId + 'password'} type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
 
             <button type='submit'>Se connecter</button>

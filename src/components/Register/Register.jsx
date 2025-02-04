@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { registerUser } from '../../services/Auth.service';
+import { useId } from 'react';
 import './Register.css';
 
 const Register = ({ onSwitchToLogin }) => {
@@ -8,6 +9,8 @@ const Register = ({ onSwitchToLogin }) => {
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
    const [error, setError] = useState(null);
+
+   const inputId = useId();
 
    const handleRegisterSubmit = async (e) => {
       e.preventDefault();
@@ -32,15 +35,15 @@ const Register = ({ onSwitchToLogin }) => {
          <form onSubmit={handleRegisterSubmit}>
             <div>
                <label htmlFor='username'>Nom d'utilisateur</label>
-               <input id='username' type='text' value={username} onChange={(e) => setUsername(e.target.value)} />
+               <input id={inputId + 'username'} type='text' value={username} onChange={(e) => setUsername(e.target.value)} />
             </div>
             <div>
                <label htmlFor='email'>Email</label>
-               <input id='email' type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
+               <input id={inputId + 'email'} type='email' value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div>
                <label htmlFor='password'>Mot de passe</label>
-               <input id='password' type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+               <input id={inputId + 'password'} type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
 
             <button type='submit'>S'inscrire</button>
