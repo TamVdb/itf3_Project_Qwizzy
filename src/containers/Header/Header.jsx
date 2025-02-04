@@ -1,6 +1,8 @@
 import './Header.css';
 import { useState, useEffect } from 'react';
 import AuthModal from '../AuthModal/AuthModal';
+import { logoutUser } from '../../services/Auth.service';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Header = () => {
 
@@ -8,6 +10,8 @@ const Header = () => {
    const [authModalType, setAuthModalType] = useState("login");
    const [isLoggedIn, setIsLoggedIn] = useState(false);
    const [username, setUsername] = useState('');
+
+   const navigate = useNavigate();
 
    useEffect(() => {
       const token = localStorage.getItem('token');
@@ -51,8 +55,8 @@ const Header = () => {
    const handleLogout = () => {
       setIsLoggedIn(false);
       setUsername('');
-      localStorage.removeItem('token');
-      localStorage.removeItem('username');
+      logoutUser();
+      navigate('/');
    };
 
    return (
@@ -73,6 +77,7 @@ const Header = () => {
                   {isLoggedIn ? (
                      <>
                         <li className="welcome">Bienvenue {username}</li>
+                        <li className="createQuizLink"><Link to="/create-quiz">Créer un Quiz</Link></li>
                         <li><a href="#" onClick={handleLogout}>Déconnexion</a></li>
                      </>
                   ) : (

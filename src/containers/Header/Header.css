@@ -29,7 +29,7 @@ header {
          align-items: center;
          gap:1rem;
 
-         li:not(.welcome) {
+         li:not(.welcome, .createQuizLink) {
             background-color: #E0A458; 
             border-radius: 1rem;
             transition: all 0.3s ease;
@@ -49,6 +49,30 @@ header {
                &:hover {
                   color: #000000;
                }
+
+               &:focus,
+               &:focus-visible {
+               outline: none;
+               }
+            }
+         }
+
+         li.createQuizLink {
+            background-color: #B81365; 
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+
+            &:hover {
+               background-color: rgba(184, 19, 101, 0.9);
+            }
+
+            a {
+               font-size: 1rem; 
+               color: white; 
+               padding: 0.8rem;
+               font-weight:500;
+               transition: color 0.2s ease;
+               display: flex;
 
                &:focus,
                &:focus-visible {
