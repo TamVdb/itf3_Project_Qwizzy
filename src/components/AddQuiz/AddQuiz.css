@@ -36,4 +36,20 @@ form.add-quiz-form {
          outline: none;
       }
    }
+
+   button {
+      border-radius: 1ch;
+      padding:1ch;
+      border:none;
+      background-color: #419D78;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color:white;
+      transition: all 0.3s ease;
+
+      &:hover,
+      &:focus {
+         background-color: rgba(65, 157, 120, 0.9);
+      }
+   }
 }

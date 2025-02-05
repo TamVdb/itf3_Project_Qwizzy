@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { loginUser } from '../../services/Auth.service';
 import { useId } from 'react';
 import './Login.css';
+import { handleSuccess, handleError } from '../../utils';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = ({ onSwitchToRegister, onSuccessfulConnection }) => {
 
@@ -19,21 +22,21 @@ const Login = ({ onSwitchToRegister, onSuccessfulConnection }) => {
          const success = await loginUser(username, password);
 
          if (success) {
-            console.log('Connexion reussie');
+            handleSuccess('Connexion reussie');
             onSuccessfulConnection();
-            window.location.reload();
+            setTimeout(() => window.location.reload(), 2000);
          } else {
-            setError('Identifiants incorrects');
+            handleError('Identifiants incorrects');
          }
       } catch (err) {
-         setError('Une erreur est survenue');
+         handleError('Une erreur est survenue');
       }
    };
 
    return (
       <div className="form-login">
+         <ToastContainer />
          <h2>Connexion</h2>
-         <p>{error}</p>
          <form onSubmit={handleLoginSubmit}>
             <div>
                <label htmlFor='username'>Nom d'utilisateur</label>
