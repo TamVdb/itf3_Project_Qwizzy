@@ -48,8 +48,10 @@ form.add-quiz-form {
       transition: all 0.3s ease;
 
       &:hover,
-      &:focus {
+      &:focus,
+       &:focus-visible {
          background-color: rgba(65, 157, 120, 0.9);
+         outline:none;
       }
    }
 }
