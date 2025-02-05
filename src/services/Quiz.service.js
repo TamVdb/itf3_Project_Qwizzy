@@ -24,31 +24,74 @@ export async function getQuizById(id) {
    return { data };
 }
 
+export async function uploadImage(image) {
+
+   try {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+         console.log('Token not found');
+         return false;
+      }
+
+      const formData = new FormData();
+      formData.append('file', image);
+
+      const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/media', {
+         method: 'POST',
+         headers: {
+            'Authorization': `Bearer ${token}`,
+         },
+         body: formData,
+         credentials: 'include',
+      });
+
+      if (!response.ok) {
+         throw new Error('Failed to upload image');
+      }
+
+      const data = await response.json();
+
+      // Return the ID of the uploaded image
+      return data.id;
+   } catch (error) {
+      console.error('Error uploading image:', error);
+      return false;
+   }
+}
+
 export async function createQuiz(quiz) {
 
    try {
-      const wpApiSettings = window.wpApiSettings;
-      const nonce = wpApiSettings?.nonce;
+      const token = localStorage.getItem('token');
+      console.log(quiz);
 
-      if (!nonce) {
-         console.log('Nonce not found');
+
+      if (!token) {
+         console.log('Token not found');
          return false;
-
       }
+
+      const body = {
+         title: quiz.title,
+         description: quiz.description,
+         difficulty: [quiz.difficulty],
+         vignette: { ID: quiz.vignette.ID }
+      };
 
       const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/quizz', {
          method: 'POST',
          headers: {
             'Content-Type': 'application/json',
-            'X-WP-Nonce': nonce,
+            'Authorization': `Bearer ${token}`,
          },
-         body: JSON.stringify({
-            title: quiz.title.rendered,
-            description: quiz.description,
-            difficulty: quiz.difficulte
-         }),
+         body: JSON.stringify(body),
          credentials: 'include',
       });
+
+      if (!response.ok) {
+         throw new Error('Failed to create quiz');
+      }
 
       return response.ok;
    } catch (error) {
