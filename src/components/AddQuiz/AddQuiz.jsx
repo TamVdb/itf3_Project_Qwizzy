@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { createQuiz, uploadImage } from '../../services/Quiz.service';
 import './AddQuiz.css';
+import { handleSuccess, handleError } from '../../utils';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddQuiz = () => {
 
@@ -25,7 +28,9 @@ const AddQuiz = () => {
          const success = await createQuiz({ title, description, difficulty, vignette: vignetteId ? { ID: vignetteId } : null });
 
          if (success) {
-            console.log('Quiz ajouté avec succès');
+
+            handleSuccess('Quiz ajouté avec succès');
+
             // Reset form fields
             setTitle('');
             setDescription('');
@@ -39,6 +44,7 @@ const AddQuiz = () => {
 
    return (
       <>
+         <ToastContainer />
          <div className="add-quiz-container">
             <h2>Ajouter un nouveau quiz</h2>
             <form className="add-quiz-form" onSubmit={handleAddQuizSubmit}>
