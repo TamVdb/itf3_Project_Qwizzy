@@ -54,6 +54,7 @@ export async function uploadImage(image) {
 
       // Return the ID of the uploaded image
       return data.id;
+
    } catch (error) {
       console.error('Error uploading image:', error);
       return false;
@@ -64,8 +65,6 @@ export async function createQuiz(quiz) {
 
    try {
       const token = localStorage.getItem('token');
-      console.log(quiz);
-
 
       if (!token) {
          console.log('Token not found');
@@ -75,8 +74,8 @@ export async function createQuiz(quiz) {
       const body = {
          title: quiz.title,
          description: quiz.description,
-         difficulty: [quiz.difficulty],
-         vignette: { ID: quiz.vignette.ID }
+         difficulte: [quiz.difficulty],
+         vignette: { ID: quiz.vignette?.ID || 222 }
       };
 
       const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/quizz', {
@@ -94,6 +93,7 @@ export async function createQuiz(quiz) {
       }
 
       return response.ok;
+
    } catch (error) {
       console.error('Error creating quiz:', error);
       return false;
