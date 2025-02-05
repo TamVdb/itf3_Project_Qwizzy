@@ -48,7 +48,7 @@ const AddQuiz = () => {
    return (
       <>
          <div className="add-quiz-container">
-            <ToastContainer />
+            <ToastContainer className="toast-container" />
             <h2>Ajouter un nouveau quiz</h2>
             <form className="add-quiz-form" onSubmit={handleAddQuizSubmit}>
                <div>

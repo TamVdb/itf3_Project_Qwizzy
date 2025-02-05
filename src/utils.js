@@ -11,8 +11,8 @@ export const handleSuccess = (message) => {
 
 export const handleError = (message) => {
    toast.error(message, {
-      position: "bottom-center",
-      autoClose: 3000,
+      position: "top-center",
+      autoClose: 2000,
       closeOnClick: true,
       pauseOnHover: false,
    });
