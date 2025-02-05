@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { createQuiz, uploadImage } from '../../services/Quiz.service';
 import './AddQuiz.css';
-import { handleSuccess, handleError } from '../../utils';
+import { handleSuccess, handleError } from '../../utilsToast';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
@@ -28,7 +28,7 @@ const AddQuiz = () => {
          }
 
          // Création du quiz avec l'ID de l'image
-         const success = await createQuiz({ title, description, difficulty, vignette: { ID: vignetteId } || 222 });
+         const success = await createQuiz({ title, description, difficulty, vignette: { ID: vignetteId } || 221 });
 
          if (success) {
             handleSuccess('Quiz ajouté avec succès');
