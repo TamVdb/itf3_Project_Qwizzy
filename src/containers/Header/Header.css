@@ -80,6 +80,10 @@ header {
                }
             }
          }
+
+         li.welcome {
+            font-size: 1.1rem;
+         }
       }
    }
 }
