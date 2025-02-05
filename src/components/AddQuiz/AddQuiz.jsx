@@ -4,6 +4,7 @@ import './AddQuiz.css';
 import { handleSuccess, handleError } from '../../utils';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
 
 const AddQuiz = () => {
 
@@ -11,6 +12,8 @@ const AddQuiz = () => {
    const [description, setDescription] = useState('');
    const [difficulty, setDifficulty] = useState('Facile');
    const [image, setImage] = useState(null);
+
+   const navigate = useNavigate();
 
    const handleAddQuizSubmit = async (e) => {
       e.preventDefault();
@@ -25,27 +28,27 @@ const AddQuiz = () => {
          }
 
          // Création du quiz avec l'ID de l'image
-         const success = await createQuiz({ title, description, difficulty, vignette: vignetteId ? { ID: vignetteId } : null });
+         const success = await createQuiz({ title, description, difficulty, vignette: { ID: vignetteId } || 222 });
 
          if (success) {
-
             handleSuccess('Quiz ajouté avec succès');
-
             // Reset form fields
             setTitle('');
             setDescription('');
             setDifficulty('Facile');
             setImage(null);
+            setTimeout(() => navigate('/'), 2000);
          }
       } catch (error) {
+         handleError('Une erreur est survenue !');
          console.error('Erreur lors de l\'ajout du quiz:', error);
       }
    };
 
    return (
       <>
-         <ToastContainer />
          <div className="add-quiz-container">
+            <ToastContainer />
             <h2>Ajouter un nouveau quiz</h2>
             <form className="add-quiz-form" onSubmit={handleAddQuizSubmit}>
                <div>
