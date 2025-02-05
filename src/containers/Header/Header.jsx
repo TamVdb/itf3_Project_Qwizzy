@@ -47,9 +47,9 @@ const Header = () => {
    };
 
    const onSuccessfulConnection = () => {
-      setUsername(localStorage.getItem('username'));
       setIsLoggedIn(true);
       setIsAuthModalVisible(false);
+      setUsername(localStorage.getItem('username'));
    };
 
    const handleLogout = () => {

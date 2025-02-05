@@ -3,7 +3,7 @@ import { registerUser } from '../../services/Auth.service';
 import { useId } from 'react';
 import './Register.css';
 
-const Register = ({ onSwitchToLogin }) => {
+const Register = ({ onSwitchToLogin, onSuccessfulConnection }) => {
 
    const [username, setUsername] = useState('');
    const [email, setEmail] = useState('');

@@ -10,11 +10,10 @@ export const loginUser = async (username, password) => {
 
       const data = await response.json();
 
-      console.log(data);
+      // console.log(data);
 
       // Store JWT Token in local storage
       localStorage.setItem('token', data.data.jwt);
-
       //Store username in local storage
       localStorage.setItem('username', username);
 
@@ -22,7 +21,7 @@ export const loginUser = async (username, password) => {
       return true;
 
    } catch (error) {
-      console.error('Error logging in:', error);
+      console.error('Login failed :', error);
       return false;
    }
 };
@@ -68,12 +67,12 @@ export const logoutUser = async () => {
          })
       });
 
-      await fetch(VITE_URL_WP + 'wp-login.php?action=logout', {
-         method: 'GET',
-         credentials: 'include'
-      });
+      // await fetch(VITE_URL_WP + 'wp-login.php?action=logout', {
+      //    method: 'GET',
+      //    credentials: 'include'
+      // });
 
-      console.log("Déconnexion réussie !");
+      console.log("Logout success !");
 
    } catch (error) {
       console.error('Logout failed:', error);

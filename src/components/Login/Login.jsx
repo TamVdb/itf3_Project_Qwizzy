@@ -21,7 +21,7 @@ const Login = ({ onSwitchToRegister, onSuccessfulConnection }) => {
          if (success) {
             console.log('Connexion reussie');
             onSuccessfulConnection();
-            // window.location.reload();
+            window.location.reload();
          } else {
             setError('Identifiants incorrects');
          }
