@@ -75,7 +75,8 @@ export async function createQuiz(quiz) {
          title: quiz.title,
          description: quiz.description,
          difficulte: [quiz.difficulty],
-         vignette: { ID: quiz.vignette?.ID || 221 }
+         vignette: { ID: quiz.vignette.ID },
+         user: quiz.user
       };
 
       const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/quizz', {

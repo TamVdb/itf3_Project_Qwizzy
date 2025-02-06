@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { createQuiz, uploadImage } from '../../services/Quiz.service';
+import { getCurrentUser } from '../../services/Auth.service';
 import './AddQuiz.css';
 import { handleSuccess, handleError } from '../../utilsToast';
 import { ToastContainer } from 'react-toastify';
@@ -19,19 +20,40 @@ const AddQuiz = () => {
       e.preventDefault();
 
       try {
-         let vignetteId = null;
-
-         // Si une image est selectionnée, l'uploader
-         if (image) {
-            vignetteId = await uploadImage(image);
-            console.log('Image uploaded with ID:', vignetteId);
+         // Check if user is logged in
+         const token = localStorage.getItem('token');
+         if (!token) {
+            handleError('Vous  n\'êtes pas connecté !');
+            return;
          }
 
-         // Création du quiz avec l'ID de l'image
-         const success = await createQuiz({ title, description, difficulty, vignette: { ID: vignetteId } || 221 });
+         // Get current user
+         const user = await getCurrentUser(token);
+         if (!user) {
+            console.error('Utilisateur non trouvé !');
+            return;
+         }
+
+         // If image is provided, upload it
+         let vignetteId = image ? await uploadImage(image) : 221;
+         // console.log('Image uploaded with ID:', vignetteId);
+
+         const quizData = {
+            title,
+            description,
+            difficulty,
+            vignette: { ID: vignetteId },
+            user: user.id
+         };
+
+         // Add quiz
+         const success = await createQuiz(quizData);
 
          if (success) {
+
+            // Toast
             handleSuccess('Quiz ajouté avec succès');
+
             // Reset form fields
             setTitle('');
             setDescription('');
@@ -47,8 +69,8 @@ const AddQuiz = () => {
 
    return (
       <>
+         <ToastContainer className="toast-container" />
          <div className="add-quiz-container">
-            <ToastContainer className="toast-container" />
             <h2>Ajouter un nouveau quiz</h2>
             <form className="add-quiz-form" onSubmit={handleAddQuizSubmit}>
                <div>
