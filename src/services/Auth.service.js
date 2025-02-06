@@ -1,6 +1,7 @@
 const { VITE_URL_WP } = import.meta.env;
 
 export const loginUser = async (username, password) => {
+
    try {
       const response = await fetch(VITE_URL_WP + 'wp-json/simple-jwt-login/v1/auth', {
          method: 'POST',
@@ -10,13 +11,35 @@ export const loginUser = async (username, password) => {
 
       const data = await response.json();
 
-      // console.log(data);
+      if (!response.ok) {
+         console.error('Login error:', data);
+         return false;
+      }
+
+      // Check if token is received
+      if (!data.data || !data.data.jwt) {
+         console.error('No token received!');
+         return false;
+      }
 
       // Store JWT Token in local storage
       localStorage.setItem('token', data.data.jwt);
-      //Store username in local storage
       localStorage.setItem('username', username);
 
+      // Création d'une session WordPress
+      const wpSessionResponse = await fetch(import.meta.env.VITE_URL_WP + 'wp-login.php', {
+         method: 'POST',
+         credentials: 'include', // Important pour gérer les cookies de session
+         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+         body: new URLSearchParams({
+            log: username,
+            pwd: password
+         })
+      });
+
+      if (!wpSessionResponse.ok) {
+         console.warn('Failed to create WP session');
+      }
 
       return true;
 
@@ -41,41 +64,58 @@ export const registerUser = async (username, email, password) => {
 
       const data = await response.json();
 
-      if (response.ok) {
-         return { success: true, message: 'Login successful' };
-      } else {
-         return { success: false, message: data.message || 'Login failed' };
-      }
+      // If response is ok, return true
+      return response.ok;
+
    } catch (error) {
-      console.error('Login failed :', err);
-      throw err;
+      console.error('Login failed :', error);
+      return false;
    }
 };
 
 export const logoutUser = async () => {
    try {
-      const username = localStorage.getItem('username');
+      // Suppression du token JWT et du username du Local Storage
       localStorage.removeItem('token');
       localStorage.removeItem('username');
 
-      await fetch(VITE_URL_WP + 'wp-json/simple-jwt-login/v1/logout', {
-         method: 'POST',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify({
-            AUTH_KEY: 'THISISMySpeCiaLAUthCodeForTheApi',
-            username: username
-         })
+      // Déconnexion WordPress via wp-login.php
+      await fetch(import.meta.env.VITE_URL_WP + 'wp-login.php?action=logout', {
+         method: 'GET',
+         credentials: 'include' // 🔥 Nécessaire pour gérer les cookies de session
       });
 
-      // await fetch(VITE_URL_WP + 'wp-login.php?action=logout', {
-      //    method: 'GET',
-      //    credentials: 'include'
-      // });
-
-      console.log("Logout success !");
+      // Redirige vers la page d'accueil
+      // window.location.href = VITE_URL_WP + 'wp-login.php?loggedout=true&wp_lang=fr_FR';
 
    } catch (error) {
-      console.error('Logout failed:', error);
+      console.error('Erreur lors de la déconnexion:', error);
+   }
+};
+
+
+export const getCurrentUser = async (token) => {
+   try {
+      const response = await fetch(import.meta.env.VITE_URL_WP + 'wp-json/wp/v2/users/me', {
+         method: 'GET',
+         headers: {
+            'Authorization': `Bearer ${token}`,
+         },
+         credentials: 'include'
+      });
+
+      if (!response.ok) {
+         console.error('Failed to get current user');
+         return false;
+      }
+
+      const userData = await response.json();
+      // console.log('Current user data:', userData);
+
+      return userData;
+
+   } catch (error) {
+      console.error('Cannot get current user:', error);
    }
 };
 
