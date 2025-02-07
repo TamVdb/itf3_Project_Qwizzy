@@ -61,6 +61,14 @@ export async function uploadImage(image) {
    }
 }
 
+/**
+ * Crée un quiz via Pods REST API.
+ * @param title         Quiz title
+ * @param description   Quiz description
+ * @param difficulty    Quiz difficulty
+ * @param vignette      Vignette ID
+ * @param user          User ID
+ */
 export async function createQuiz(quiz) {
 
    try {
