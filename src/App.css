@@ -52,3 +52,7 @@ h3 {
    position: absolute;
    top:8rem;
 }
+
+button {
+   transition: all 0.3ms ease;
+}

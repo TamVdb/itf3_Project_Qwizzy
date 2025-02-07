@@ -45,7 +45,6 @@ form {
       font-size: 1.1rem;
       cursor: pointer;
       color:white;
-      transition: all 0.3s ease;
 
       &:hover,
       &:focus {
