@@ -1,11 +1,15 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { createQuiz, uploadImage } from '../../services/Quiz.service';
 import { getCurrentUser } from '../../services/Auth.service';
-import './AddQuiz.css';
+
 import { handleSuccess, handleError } from '../../utilsToast';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
+
+import './AddQuiz.css';
+
 
 const AddQuiz = () => {
 
