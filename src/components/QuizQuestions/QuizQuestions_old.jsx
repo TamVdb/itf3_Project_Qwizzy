@@ -4,7 +4,6 @@ import { getQuizById } from '../../services/Quiz.service';
 import { Link } from 'react-router-dom';
 import './QuizQuestions.css';
 import * as fuzzball from 'fuzzball';
-
 import { getCurrentUser } from '../../services/Auth.service';
 
 const QuizQuestions = () => {
@@ -17,8 +16,8 @@ const QuizQuestions = () => {
    const [score, setScore] = useState(0);
    const [isPlaying, setIsPlaying] = useState(false);
    const [isGameOver, setIsGameOver] = useState(false);
-   const [elapsedTime, setElapsedTime] = useState(0);
    const [startTime, setStartTime] = useState(null);
+   const [elapsedTime, setElapsedTime] = useState(0);
    const [timerActive, setTimerActive] = useState(false);
 
    const [userId, setUserId] = useState(null);
@@ -60,16 +59,18 @@ const QuizQuestions = () => {
 
    const currentQuestion = questions[currentQuestionIndex];
 
+   // Start the quiz
    const handleStartQuiz = () => {
       setStartTime(Date.now());
       setIsPlaying(true);
-      setTimerActive(true); // Start the timer when the quiz starts
    };
 
    // End of the quiz
    const gameOver = () => {
+      const totalTime = (new Date().getTime() - startTime) / 1000;
       setIsGameOver(true);
-      setTimerActive(false); // Stop the timer
+      setElapsedTime(totalTime);
+      setTimerActive(true);
    };
 
    // Feedback message
@@ -81,6 +82,7 @@ const QuizQuestions = () => {
 
    // Submit answer
    const handleSubmit = () => {
+
       const acceptedAnswers = [
          currentQuestion.reponse_fr,
          currentQuestion.reponse_en,
@@ -104,7 +106,7 @@ const QuizQuestions = () => {
 
       if (isMatch) {
          setIsCorrect(true);
-         setScore((prevScore) => prevScore + 1);
+         setScore(prevScore => prevScore + 1);
       } else {
          setIsCorrect(false);
       }
@@ -112,7 +114,7 @@ const QuizQuestions = () => {
       // Go to next question after 1 second
       setTimeout(() => {
          if (currentQuestionIndex + 1 < questions.length) {
-            setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
+            setCurrentQuestionIndex(prevIndex => prevIndex + 1);
             setUserAnswer('');
             setIsCorrect(null);
          } else {
@@ -133,7 +135,7 @@ const QuizQuestions = () => {
                <p className="end-title">Score final</p>
                <span className="accent">{finalScore}%</span>
                <p className="end-title">Temps total</p>
-               <span className="accent">{elapsedTime} secondes</span>
+               <span className="accent">{elapsedTime.toFixed(2)} secondes</span>
             </div>
          ) : (
             <div className="quiz-container">
@@ -143,16 +145,15 @@ const QuizQuestions = () => {
                   type="text"
                   value={userAnswer}
                   onChange={(e) => setUserAnswer(e.target.value)}
-                  onFocus={handleStartQuiz}
                   onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
                />
                <button onClick={handleSubmit}>Valider</button>
                {isCorrect === true && <p className="correct">Bonne réponse ! ✅</p>}
                {isCorrect === false && <p className="incorrect">❌ La bonne réponse est : {currentQuestion.reponse_fr}</p>}
 
-               {/* {!isPlaying && (
+               {!isPlaying && (
                   <button onClick={handleStartQuiz}>Démarrer le quiz</button>
-               )} */}
+               )}
                {timerActive && <p>Temps écoulé : {elapsedTime} secondes</p>}
             </div>
          )}
@@ -160,6 +161,7 @@ const QuizQuestions = () => {
          <div className="return">
             <Link to={'/'} className="returnButton">Retour aux quizz</Link>
          </div>
+
       </>
    );
 };
