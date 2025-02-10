@@ -26,20 +26,20 @@ export const loginUser = async (username, password) => {
       localStorage.setItem('token', data.data.jwt);
       localStorage.setItem('username', username);
 
-      // Création d'une session WordPress
-      const wpSessionResponse = await fetch(import.meta.env.VITE_URL_WP + 'wp-login.php', {
-         method: 'POST',
-         credentials: 'include', // Important pour gérer les cookies de session
-         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-         body: new URLSearchParams({
-            log: username,
-            pwd: password
-         })
-      });
+      // // Création d'une session WordPress
+      // const wpSessionResponse = await fetch(import.meta.env.VITE_URL_WP + 'wp-login.php', {
+      //    method: 'POST',
+      //    credentials: 'include', // Important pour gérer les cookies de session
+      //    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      //    body: new URLSearchParams({
+      //       log: username,
+      //       pwd: password
+      //    })
+      // });
 
-      if (!wpSessionResponse.ok) {
-         console.warn('Failed to create WP session');
-      }
+      // if (!wpSessionResponse.ok) {
+      //    console.warn('Failed to create WP session');
+      // }
 
       return true;
 
@@ -100,8 +100,7 @@ export const getCurrentUser = async (token) => {
          method: 'GET',
          headers: {
             'Authorization': `Bearer ${token}`,
-         },
-         credentials: 'include'
+         }
       });
 
       if (!response.ok) {
