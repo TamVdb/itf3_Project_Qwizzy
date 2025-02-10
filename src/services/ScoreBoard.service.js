@@ -37,7 +37,6 @@ export async function createScoreboard(userId, quizId, finalScore, time, postTit
             'Authorization': `Bearer ${token}`,
          },
          body: JSON.stringify(scoreboard),
-         credentials: 'include',
       });
 
       if (!response.ok) {
@@ -52,8 +51,8 @@ export async function createScoreboard(userId, quizId, finalScore, time, postTit
    }
 }
 
-export async function getScoreBoard() {
-   const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/scoreboard');
+export async function getAllScoreBoard() {
+   const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/scoreboards');
 
    if (!response.ok) {
       throw new Error('Failed to fetch scoreboard');
@@ -64,14 +63,52 @@ export async function getScoreBoard() {
    return { data };
 }
 
-export async function getScoreBoardByUser(id) {
-   const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/scoreboard/' + id);
+export async function getScoreBoardByUser(userId) {
 
-   if (!response.ok) {
-      throw new Error('Failed to fetch scoreboard');
+   try {
+      const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/scoreboards?user=' + userId);
+
+      if (!response.ok) {
+         throw new Error('Failed to fetch scoreboard');
+      }
+
+      const data = await response.json();
+
+      // Group data by quiz ID
+      const groupedByQuiz = {};
+
+      data.forEach(scoreboard => {
+         const quizId = scoreboard.related_quiz[0]?.ID;
+
+         if (!quizId) return;
+
+         if (!groupedByQuiz[quizId]) {
+            groupedByQuiz[quizId] = {
+               quizId,
+               title: scoreboard.related_quiz[0].post_title,
+               difficulty: scoreboard.related_quiz[0].difficulte,
+               image: scoreboard.related_quiz[0].vignette,
+               scores: [],
+            };
+         }
+
+         groupedByQuiz[quizId].scores.push({
+            id: scoreboard.id,
+            score: scoreboard.score,
+            time: scoreboard.time,
+            date: scoreboard.date
+         });
+      });
+
+      // Only keep the latest 3 scores for each quiz
+      const formattedData = Object.values(groupedByQuiz).map(quiz => ({
+         ...quiz,
+         scores: quiz.scores.slice(-3)
+      }));
+
+      return { data: formattedData };
+   } catch (error) {
+      console.error('Error fetching scoreboard:', error);
+      return { data: [] };
    }
-
-   const data = await response.json();
-
-   return { data };
 }
