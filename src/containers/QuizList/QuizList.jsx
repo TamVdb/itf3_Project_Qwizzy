@@ -14,7 +14,6 @@ const QuizList = () => {
       getAllQuizz()
          .then((result) => {
             if (ignore) return;
-            // console.log(result.data);
             setQuizz(quizz => [...quizz, ...result.data]);
          })
          .catch((error) => {
@@ -29,8 +28,6 @@ const QuizList = () => {
    return (
       <>
          <div className="quizList-container">
-
-
             <h2>Quiz List</h2>
             <div className="quizList">
                {quizz.map((quiz) => (
