@@ -2,6 +2,7 @@ import App from './App';
 import QuizList from './containers/QuizList/QuizList';
 import QuizQuestions from './components/QuizQuestions/QuizQuestions';
 import AddQuiz from './components/AddQuiz/AddQuiz';
+import UserScoreBoard from './containers/UserScoreBoard/UserScoreBoard';
 
 const routes = [
    {
@@ -21,6 +22,10 @@ const routes = [
          {
             path: 'create-quiz',
             element: <AddQuiz />
+         },
+         {
+            path: 'user-scoreboard',
+            element: <UserScoreBoard />
          }
       ]
    }

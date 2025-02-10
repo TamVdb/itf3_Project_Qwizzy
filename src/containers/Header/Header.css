@@ -29,13 +29,13 @@ header {
          align-items: center;
          gap:1rem;
 
-         li:not(.welcome, .createQuizLink) {
+         li:not(.welcome, .createQuizLink, .scoreboard) {
             background-color: #E0A458; 
             border-radius: 1rem;
             transition: all 0.3s ease;
 
             &:hover {
-               background-color: #eac587;
+               background-color: rgba(224, 164, 88, 0.95);
             }
 
             a {
@@ -63,7 +63,7 @@ header {
             transition: all 0.3s ease;
 
             &:hover {
-               background-color: rgba(184, 19, 101, 0.9);
+               background-color: rgba(184, 19, 101, 0.95);
             }
 
             a {
@@ -73,6 +73,34 @@ header {
                font-weight:500;
                transition: color 0.2s ease;
                display: flex;
+
+               &:focus,
+               &:focus-visible {
+               outline: none;
+               }
+            }
+         }
+
+         li.scoreboard {
+            background-color: #6290c8; 
+            border-radius: 1rem;
+            transition: all 0.3s ease;
+
+            &:hover {
+               background-color: rgba(98, 144, 200, 0.95);
+            }
+
+            a {
+               font-size: 1rem; 
+               color: #2E2836; 
+               padding: 0.8rem;
+               font-weight:500;
+               transition: color 0.2s ease;
+               display: flex;
+
+               &:hover {
+                  color: #000000;
+               }
 
                &:focus,
                &:focus-visible {
