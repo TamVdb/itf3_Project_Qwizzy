@@ -6,6 +6,7 @@ import './QuizQuestions.css';
 import * as fuzzball from 'fuzzball';
 
 import { getCurrentUser } from '../../services/Auth.service';
+import { createScoreboard } from '../../services/ScoreBoard.service';
 
 const QuizQuestions = () => {
    const { id } = useParams();
@@ -32,14 +33,17 @@ const QuizQuestions = () => {
          .catch((error) => console.error('Error fetching quiz:', error));
    }, [id]);
 
-   // // Get current user ID
-   // useEffect(() => {
-   //    getCurrentUser()
-   //       .then((result) => {
-   //          setUserId(result.data.id);
-   //       })
-   //       .catch((error) => console.error('Error fetching user:', error));
-   // }, []);
+   // Get current user ID from local storage
+   useEffect(() => {
+      const token = localStorage.getItem('token');
+      if (token) {
+         getCurrentUser(token)
+            .then((result) => {
+               setUserId(result.id);
+            })
+            .catch((error) => console.error('Error fetching current user:', error));
+      }
+   }, []);
 
    // Update elapsed time when the timer is active
    useEffect(() => {
@@ -70,6 +74,16 @@ const QuizQuestions = () => {
    const gameOver = () => {
       setIsGameOver(true);
       setTimerActive(false); // Stop the timer
+
+      // Post scoreboard if user is logged in
+      if (userId) {
+         try {
+            const createdScoreboard = createScoreboard(userId, id, finalScore, elapsedTime);
+            console.log(createdScoreboard);
+         } catch (error) {
+            console.error('Error creating scoreboard:', error);
+         }
+      }
    };
 
    // Feedback message
@@ -121,7 +135,8 @@ const QuizQuestions = () => {
       }, 1000);
    };
 
-   const finalScore = ((score / questions.length) * 100).toFixed(2);
+   // Score en pourcentage et arrondis
+   const finalScore = Math.round((score / questions.length) * 100);
    const feedbackMessage = getFeedbackMessage();
 
    return (
