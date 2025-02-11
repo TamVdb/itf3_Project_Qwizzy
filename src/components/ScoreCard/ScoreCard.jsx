@@ -1,6 +1,7 @@
 import './ScoreCard.css';
 
 const ScoreCard = ({ quizId, title, difficulty, image, scores }) => {
+
    return (
       <div className="scoreCard">
          <div className="scoreCard-info">
@@ -9,10 +10,15 @@ const ScoreCard = ({ quizId, title, difficulty, image, scores }) => {
                <p>{difficulty}</p>
             </div>
             <div className="scores">
+               <div className="title">
+                  <span>Score</span>
+                  <span>Temps</span>
+                  <span>Date</span>
+               </div>
                {scores.map((score, index) => (
                   <div key={index} className="scoreItem">
-                     <p className="score">Score : {score.score}</p>
-                     <p className="time">Temps : {score.time}s</p>
+                     <p className="score">{score.score}%</p>
+                     <p className="time">{score.time}s</p>
                      <p className="date">{score.date}</p>
                   </div>
                ))}
