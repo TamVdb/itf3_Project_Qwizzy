@@ -66,7 +66,7 @@ export async function getAllScoreBoard() {
 export async function getScoreBoardByUser(userId) {
 
    try {
-      const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/scoreboards');
+      const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/scoreboards?user=' + userId);
 
       if (!response.ok) {
          throw new Error('Failed to fetch scoreboard');
