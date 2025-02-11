@@ -84,7 +84,7 @@ const Header = () => {
                      <>
                         <li className="welcome">Bienvenue {username}</li>
                         <li className="createQuizLink"><Link to="/create-quiz">Créer un Quiz</Link></li>
-                        <li className="scoreboard"><Link to={`/user-scoreboard/${userId}`}>Tes scores</Link></li>
+                        <li className="scoreboard"><Link to={`/scoreboard/user/${userId}`}>Tes scores</Link></li>
                         <li><a href="#" onClick={handleLogout}>Déconnexion</a></li>
                      </>
                   ) : (
