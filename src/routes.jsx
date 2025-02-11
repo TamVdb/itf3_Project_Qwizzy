@@ -24,7 +24,7 @@ const routes = [
             element: <AddQuiz />
          },
          {
-            path: 'user-scoreboard',
+            path: 'user-scoreboard/:userId',
             element: <UserScoreBoard />
          }
       ]

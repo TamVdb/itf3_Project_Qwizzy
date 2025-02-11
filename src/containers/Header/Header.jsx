@@ -10,15 +10,19 @@ const Header = () => {
    const [authModalType, setAuthModalType] = useState("login");
    const [isLoggedIn, setIsLoggedIn] = useState(false);
    const [username, setUsername] = useState('');
+   const [userId, setUserId] = useState(null);
 
    const navigate = useNavigate();
 
    useEffect(() => {
       const token = localStorage.getItem('token');
       const storedUsername = localStorage.getItem('username');
-      if (token && storedUsername) {
+      const storedUserId = localStorage.getItem('userId');
+
+      if (token && storedUsername && storedUserId) {
          setIsLoggedIn(true);
          setUsername(storedUsername);
+         setUserId(storedUserId);
       }
    }, []);
 
@@ -50,11 +54,13 @@ const Header = () => {
       setIsLoggedIn(true);
       setIsAuthModalVisible(false);
       setUsername(localStorage.getItem('username'));
+      setUserId(localStorage.getItem('userId'));
    };
 
    const handleLogout = () => {
       setIsLoggedIn(false);
       setUsername('');
+      setUserId(null);
       logoutUser();
       navigate('/');
    };
@@ -78,7 +84,7 @@ const Header = () => {
                      <>
                         <li className="welcome">Bienvenue {username}</li>
                         <li className="createQuizLink"><Link to="/create-quiz">Créer un Quiz</Link></li>
-                        <li className="scoreboard"><Link to="/user-scoreboard">Tes scores</Link></li>
+                        <li className="scoreboard"><Link to={`/user-scoreboard/${userId}`}>Tes scores</Link></li>
                         <li><a href="#" onClick={handleLogout}>Déconnexion</a></li>
                      </>
                   ) : (
