@@ -1,25 +1,14 @@
 import { useState, useEffect } from 'react';
-import { getCurrentUser } from '../../services/Auth.service';
 import { getScoreBoardByUser } from '../../services/ScoreBoard.service';
 import ScoreCard from '../../components/ScoreCard/ScoreCard';
 import './UserScoreBoard.css';
+import { useParams } from 'react-router-dom';
 
 const UserScoreBoard = () => {
 
-   const [userId, setUserId] = useState(null);
-   const [scoreBoard, setScoreBoard] = useState([]);
+   const { userId } = useParams();
 
-   // Get current user ID from local storage
-   useEffect(() => {
-      const token = localStorage.getItem('token');
-      if (token) {
-         getCurrentUser(token)
-            .then((result) => {
-               setUserId(result.id);
-            })
-            .catch((error) => console.error('Error fetching current user:', error));
-      }
-   }, []);
+   const [scoreBoard, setScoreBoard] = useState([]);
 
    // Get score board for the current user
    useEffect(() => {
@@ -28,15 +17,15 @@ const UserScoreBoard = () => {
             .then((result) => {
                setScoreBoard(result.data);
             })
-            .catch((error) => console.error('Error fetching score board:', error));
+            .catch((error) => console.error('Erreur lors de la récupération du scoreboard :', error));
       }
    }, [userId]);
 
    return (
       <>
-         <div className="scoreboardList-container">
+         <div className="userScoreboard-container">
             <h2>Scoreboard</h2>
-            <div className="scorebardList">
+            <div className="userScoreboardList">
                {scoreBoard.map((quiz) => (
                   <ScoreCard
                      key={quiz.quizId}
