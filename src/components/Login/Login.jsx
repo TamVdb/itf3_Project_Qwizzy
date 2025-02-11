@@ -5,6 +5,7 @@ import './Login.css';
 import { handleError } from '../../utilsToast';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { getCurrentUser } from '../../services/Auth.service';
 
 const Login = ({ onSwitchToRegister, onSuccessfulConnection }) => {
 
@@ -20,6 +21,14 @@ const Login = ({ onSwitchToRegister, onSuccessfulConnection }) => {
          const success = await loginUser(username, password);
 
          if (success) {
+            const token = localStorage.getItem('token'); // Récupérer le token stocké par ton service
+
+            if (token) {
+               const user = await getCurrentUser(token);
+               localStorage.setItem('userId', user.id);
+            } else {
+               console.error("❌ Aucun token trouvé dans localStorage !");
+            }
             onSuccessfulConnection();
             window.location.href = '/';
          } else {
