@@ -78,16 +78,12 @@ export const logoutUser = async () => {
       // Suppression du token JWT et du username du Local Storage
       localStorage.removeItem('token');
       localStorage.removeItem('username');
+      localStorage.removeItem('userId');
 
       // Déconnexion WordPress via wp-login.php
       await fetch(import.meta.env.VITE_URL_WP + 'wp-login.php?action=logout', {
-         method: 'GET',
-         credentials: 'include' // 🔥 Nécessaire pour gérer les cookies de session
+         method: 'GET'
       });
-
-      // Redirige vers la page d'accueil
-      // window.location.href = VITE_URL_WP + 'wp-login.php?loggedout=true&wp_lang=fr_FR';
-
    } catch (error) {
       console.error('Erreur lors de la déconnexion:', error);
    }
@@ -109,7 +105,6 @@ export const getCurrentUser = async (token) => {
       }
 
       const userData = await response.json();
-      // console.log('Current user data:', userData);
 
       return userData;
 
