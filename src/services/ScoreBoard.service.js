@@ -66,7 +66,7 @@ export async function getAllScoreBoard() {
 export async function getScoreBoardByUser(userId) {
 
    try {
-      const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/scoreboards?user=' + userId);
+      const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/scoreboards');
 
       if (!response.ok) {
          throw new Error('Failed to fetch scoreboard');
@@ -74,10 +74,15 @@ export async function getScoreBoardByUser(userId) {
 
       const data = await response.json();
 
+      // Filtrer les scoreboards pour ne garder que ceux du userId donné
+      const userScoreboards = data.filter(scoreboard =>
+         scoreboard.user && scoreboard.user[0]?.ID == userId
+      );
+
       // Group data by quiz ID
       const groupedByQuiz = {};
 
-      data.forEach(scoreboard => {
+      userScoreboards.forEach(scoreboard => {
          const quizId = scoreboard.related_quiz[0]?.ID;
 
          if (!quizId) return;
@@ -97,6 +102,16 @@ export async function getScoreBoardByUser(userId) {
             score: scoreboard.score,
             time: scoreboard.time,
             date: scoreboard.date
+         });
+
+         // Format the date for french locale
+         groupedByQuiz[quizId].scores.forEach(score => {
+            const date = new Date(score.date);
+            score.date = date.toLocaleDateString('fr-FR', {
+               day: '2-digit',
+               month: '2-digit',
+               year: 'numeric'
+            });
          });
       });
 
