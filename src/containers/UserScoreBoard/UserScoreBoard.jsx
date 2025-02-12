@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getScoreBoardByUser } from '../../services/ScoreBoard.service';
-import ScoreCard from '../../components/ScoreCard/ScoreCard';
+import UserScoreCard from '../../components/UserScoreCard/UserScoreCard';
 import './UserScoreBoard.css';
 import { useParams } from 'react-router-dom';
 
@@ -8,14 +8,14 @@ const UserScoreBoard = () => {
 
    const { userId } = useParams();
 
-   const [scoreBoard, setScoreBoard] = useState([]);
+   const [userScoreBoard, setUserScoreBoard] = useState([]);
 
    // Get score board for the current user
    useEffect(() => {
       if (userId) {
          getScoreBoardByUser(userId)
             .then((result) => {
-               setScoreBoard(result.data);
+               setUserScoreBoard(result.data);
             })
             .catch((error) => console.error('Erreur lors de la récupération du scoreboard :', error));
       }
@@ -24,10 +24,10 @@ const UserScoreBoard = () => {
    return (
       <>
          <div className="userScoreboard-container">
-            <h2>Scoreboard</h2>
+            <h2>Mes scores</h2>
             <div className="userScoreboardList">
-               {scoreBoard.map((quiz) => (
-                  <ScoreCard
+               {userScoreBoard.map((quiz) => (
+                  <UserScoreCard
                      key={quiz.quizId}
                      quizId={quiz.quizId}
                      title={quiz.title}
