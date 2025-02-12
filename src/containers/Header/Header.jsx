@@ -91,6 +91,7 @@ const Header = () => {
                      <>
                         <li><a href="#" onClick={handleLoginModal}>Connexion</a></li>
                         <li><a href="#" onClick={handleRegisterModal}>Inscription</a></li>
+                        <li className="scoreboard"><Link to="/scoreboard">Scoreboard</Link></li>
                      </>
                   )}
                </ul>

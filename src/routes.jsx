@@ -3,6 +3,7 @@ import QuizList from './containers/QuizList/QuizList';
 import QuizQuestions from './components/QuizQuestions/QuizQuestions';
 import AddQuiz from './components/AddQuiz/AddQuiz';
 import UserScoreBoard from './containers/UserScoreBoard/UserScoreBoard';
+import ScoreBoard from './containers/ScoreBoard/ScoreBoard';
 
 const routes = [
    {
@@ -26,6 +27,10 @@ const routes = [
          {
             path: 'scoreboard/user/:userId',
             element: <UserScoreBoard />
+         },
+         {
+            path: 'scoreboard',
+            element: <ScoreBoard />
          }
       ]
    }
