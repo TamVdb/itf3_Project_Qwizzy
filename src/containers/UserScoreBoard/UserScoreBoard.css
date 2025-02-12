@@ -1,19 +1,35 @@
-.userScoreboard-container h2 {
-   text-align: center;
-   color:#FFFBFF;
-   margin:3rem 0;
-}
-
-.userScoreboardList {
+.userScoreboard-container {
    display: flex;
    flex-direction: column;
-   max-width: 1280px;
-   width:100%;
-   gap: 3rem;
-   margin:auto;
 
-   p {
-      color:white;
+   h2 {
       text-align: center;
+      color:#FFFBFF;
+      margin:3rem 0;
+   }
+
+   .userScoreboardList {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      max-width: 1280px;
+      width:100%;
+      gap: 2rem;
+      margin: auto;
+
+      p {
+         color:white;
+         margin: auto;
+      }
+   }
+}
+
+.best {
+   background-color: #419d78;
+}
+
+@media only screen and (max-width: 1024px) {
+   .userScoreboardList {
+      flex-direction: column;
    }
 }
