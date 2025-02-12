@@ -11,4 +11,9 @@
    width:100%;
    gap: 3rem;
    margin:auto;
+
+   p {
+      color:white;
+      text-align: center;
+   }
 }

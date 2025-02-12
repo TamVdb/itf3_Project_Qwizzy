@@ -26,16 +26,20 @@ const UserScoreBoard = () => {
          <div className="userScoreboard-container">
             <h2>Mes scores</h2>
             <div className="userScoreboardList">
-               {userScoreBoard.map((quiz) => (
-                  <UserScoreCard
-                     key={quiz.quizId}
-                     quizId={quiz.quizId}
-                     title={quiz.title}
-                     difficulty={quiz.difficulty}
-                     image={quiz.image}
-                     scores={quiz.scores} // On passe directement le tableau des scores
-                  />
-               ))}
+               {userScoreBoard && userScoreBoard.length > 0 ? (
+                  userScoreBoard.map((quiz) => (
+                     <UserScoreCard
+                        key={quiz.quizId}
+                        quizId={quiz.quizId}
+                        title={quiz.title}
+                        difficulty={quiz.difficulty}
+                        image={quiz.image}
+                        scores={quiz.scores} // Pass the scores array
+                     />
+                  ))
+               ) : (
+                  <p>Tu n'as pas encore joué à un quizz !</p>
+               )}
             </div>
          </div>
       </>
