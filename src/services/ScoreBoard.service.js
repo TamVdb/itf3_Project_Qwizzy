@@ -9,7 +9,7 @@ const { VITE_URL_WP } = import.meta.env;
  * @returns
  */
 
-export async function createScoreboard(userId, quizId, scorePercent, time, finalScore, postTitle) {
+export async function createScoreboard(userId, id, scorePercent, elapsedTime, finalScore) {
 
    try {
       const token = localStorage.getItem('token');
@@ -19,14 +19,14 @@ export async function createScoreboard(userId, quizId, scorePercent, time, final
          return false;
       }
 
-      const postTitle = `Quiz ${quizId} - User ${userId} - Score ${finalScore}`;
+      const postTitle = `Quiz ${id} - User ${userId} - Score ${finalScore}`;
 
       const scoreboard = {
          title: postTitle,
          user: userId,
-         related_quiz: quizId,
+         related_quiz: id,
          score: scorePercent,
-         time: time,
+         time: elapsedTime,
          points: finalScore,
          status: "publish"
       };
@@ -115,7 +115,6 @@ export async function getAllScoreBoard() {
 }
 
 export async function getScoreBoardByUser(userId) {
-
    try {
       const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/scoreboards?user=' + userId);
 
@@ -151,13 +150,24 @@ export async function getScoreBoardByUser(userId) {
          groupedByQuiz[quizId].scores.push({
             id: scoreboard.id,
             score: scoreboard.score,
-            points: scoreboard.points,
             time: scoreboard.time,
+            points: scoreboard.points,
             date: scoreboard.date
          });
+      });
 
-         // Format the date for french locale
-         groupedByQuiz[quizId].scores.forEach(score => {
+      // Traiter les scores pour chaque quiz
+      const formattedData = Object.values(groupedByQuiz).map(quiz => {
+         const bestScore = quiz.scores.reduce((max, score) => (score.points > max.points ? score : max), quiz.scores[0]); // Trouver le meilleur score
+         const lastThreeScores = quiz.scores.slice(0, 3); // Garder les 3 derniers scores (déjà triés en BDD)
+
+         // Vérifier si le meilleur score est déjà dans les 3 derniers, sinon l'ajouter
+         const scoresToDisplay = lastThreeScores.some(score => score.id === bestScore.id)
+            ? lastThreeScores
+            : [bestScore, ...lastThreeScores].slice(0, 4); // Garder max 4 scores (meilleur + 3 derniers)
+
+         // Formatter la date pour l'affichage
+         scoresToDisplay.forEach(score => {
             const date = new Date(score.date);
             if (!isNaN(date.getTime())) {
                score.date = date.toLocaleDateString('fr-FR', {
@@ -166,16 +176,15 @@ export async function getScoreBoardByUser(userId) {
                   year: 'numeric'
                });
             } else {
-               console.error("Date invalide:", score.date); // Si la date est invalide
+               console.error("Date invalide:", score.date);
             }
          });
-      });
 
-      // Only keep the latest 3 scores for each quiz
-      const formattedData = Object.values(groupedByQuiz).map(quiz => ({
-         ...quiz,
-         scores: quiz.scores.slice(-3)
-      }));
+         return {
+            ...quiz,
+            scores: scoresToDisplay
+         };
+      });
 
       return { data: formattedData };
 

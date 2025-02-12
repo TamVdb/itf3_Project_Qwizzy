@@ -78,7 +78,7 @@ const QuizQuestions = () => {
       // Post scoreboard if user is logged in
       if (userId) {
          try {
-            const createdScoreboard = createScoreboard(userId, id, scorePercent, finalScore, elapsedTime);
+            const createdScoreboard = createScoreboard(userId, id, scorePercent, elapsedTime, finalScore);
          } catch (error) {
             console.error('Error creating scoreboard:', error);
          }
@@ -142,6 +142,7 @@ const QuizQuestions = () => {
 
    // Calculate final score
    const finalScore = Math.round(scorePercent - (penalty * elapsedTime));
+
 
    const feedbackMessage = getFeedbackMessage();
 

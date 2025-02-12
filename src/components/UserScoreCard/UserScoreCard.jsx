@@ -2,6 +2,9 @@ import './UserScoreCard.css';
 
 const UserScoreCard = ({ quizId, title, difficulty, image, scores }) => {
 
+   // Fin the highest score
+   const bestScore = scores.reduce((max, score) => (score.points > max.points ? score : max), scores[0]);
+
    return (
       <div className="UserScoreCard">
          <div className="UserScoreCard-info">
@@ -17,7 +20,7 @@ const UserScoreCard = ({ quizId, title, difficulty, image, scores }) => {
                   <span>Date</span>
                </div>
                {scores.map((score, index) => (
-                  <div key={index} className="scoreItem">
+                  <div key={index} className={`scoreItem ${score.id === bestScore.id ? 'best' : ''}`}>
                      <p className="score">{score.score}%</p>
                      <p className="time">{score.time}s</p>
                      <p className="points">{score.points}</p>
@@ -27,7 +30,7 @@ const UserScoreCard = ({ quizId, title, difficulty, image, scores }) => {
             </div>
          </div>
          <div className="UserScoreCard-img">
-            <img src={image} alt="" />
+            <img src={image} alt={`Illustration du quiz ${title}`} />
          </div>
 
       </div>
