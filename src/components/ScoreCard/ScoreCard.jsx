@@ -18,7 +18,7 @@ const ScoreCard = ({ quizId, username, title, difficulty, image, scores }) => {
                </div>
                {scores.map((score, index) => (
                   <div key={index} className="scoreItem">
-                     <p className="pseudo">{score.username}</p>
+                     <p className="pseudo">{username}</p>
                      <p className="score">{score.score}%</p>
                      <p className="time">{score.time}s</p>
                      <p className="date">{score.date}</p>
@@ -27,11 +27,11 @@ const ScoreCard = ({ quizId, username, title, difficulty, image, scores }) => {
             </div>
          </div>
          <div className="ScoreCard-img">
-            <img src={image} alt="" />
+            <img src={image} alt={`Image du quiz ${title}`} />
          </div>
 
       </div>
    );
 };
 
-export default UserScoreCard;
+export default ScoreCard;
