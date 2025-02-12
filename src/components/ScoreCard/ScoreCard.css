@@ -53,20 +53,9 @@
 
             span {
                display: flex;
+               justify-content: space-evenly;
                flex:1;
                color:white;
-            }
-
-            span:first-child() {
-               justify-content: flex-start;
-            }
-
-            span:nth-child(2) {
-               justify-content: center;
-            }
-
-            span:nth-child(3) {
-               justify-content: flex-end;
             }
          }
 
@@ -76,23 +65,12 @@
 
             p {
                display: flex;
+               justify-content: space-evenly;
                font-size: 0.9rem;
                flex:1;
                color:#f4f6fa;
                font-weight: 300;
                padding:0.7ch 0;
-            }
-
-            p.score {
-               justify-content: flex-start;
-            }
-
-            p.time {
-               justify-content: center;
-            }
-
-            p.date {
-               justify-content: flex-end;
             }
          }
       }
