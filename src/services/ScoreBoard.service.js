@@ -52,15 +52,60 @@ export async function createScoreboard(userId, quizId, finalScore, time, postTit
 }
 
 export async function getAllScoreBoard() {
-   const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/scoreboards');
 
-   if (!response.ok) {
-      throw new Error('Failed to fetch scoreboard');
+   try {
+
+      const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/scoreboards');
+
+      if (!response.ok) {
+         throw new Error('Failed to fetch scoreboard');
+      }
+
+      const data = await response.json();
+
+      // Group data by quiz ID
+      const groupedByQuiz = {};
+
+      data.forEach(scoreboard => {
+         const quizId = scoreboard.related_quiz[0]?.ID;
+
+         if (!quizId) return;
+
+         if (!groupedByQuiz[quizId]) {
+            groupedByQuiz[quizId] = {
+               quizId,
+               username: scoreboard.user[0].display_name,
+               title: scoreboard.related_quiz[0].post_title,
+               difficulty: scoreboard.related_quiz[0].difficulte,
+               image: scoreboard.related_quiz[0].vignette,
+               scores: [],
+            };
+         }
+
+         groupedByQuiz[quizId].scores.push({
+            id: scoreboard.id,
+            score: scoreboard.score,
+            time: scoreboard.time,
+            date: scoreboard.date
+         });
+
+         // Format the date for french locale
+         groupedByQuiz[quizId].scores.forEach(score => {
+            const date = new Date(score.date);
+            score.date = date.toLocaleDateString('fr-FR', {
+               day: '2-digit',
+               month: '2-digit',
+               year: 'numeric'
+            });
+         });
+      });
+
+      return { data: Object.values(groupedByQuiz) };
+
+   } catch (error) {
+      console.error('Error fetching scoreboard:', error);
+      return { data: [] };
    }
-
-   const data = await response.json();
-
-   return { data };
 }
 
 export async function getScoreBoardByUser(userId) {
@@ -122,6 +167,7 @@ export async function getScoreBoardByUser(userId) {
       }));
 
       return { data: formattedData };
+
    } catch (error) {
       console.error('Error fetching scoreboard:', error);
       return { data: [] };
