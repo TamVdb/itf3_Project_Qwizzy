@@ -1,0 +1,139 @@
+.UserScoreCard {
+   display: flex;
+   justify-content: space-between;
+   flex-wrap: wrap;
+   border-radius: 10px;
+   box-shadow: 0px 4px 10px rgba(25, 22, 29, 0.8);
+   max-width: 800px;
+   width:100%;
+   margin: auto;
+   background-color: #3f4569;
+   min-height:200px;
+   
+
+   .UserScoreCard-info {
+      display: flex;
+      flex-direction: column;
+      flex:2;
+      width:75%;
+      padding:1.5rem;
+
+      .info {
+         display: flex;
+         flex-direction: column;
+
+         h3 {
+            padding-bottom: 1rem;
+            color: #f4f6fa;
+         }
+
+         p {
+            width:fit-content;
+            background-color: #d2daeb;
+            padding:0.8ch 1ch;
+            border-radius: 2ch;
+            font-size: 0.85rem;
+            font-weight: 400;
+            line-height: 1;
+         }
+      }
+
+      .scores {
+         display: flex;
+         flex-direction: column;
+         margin-top: 1.5rem;
+         background-color: #26283b;
+         border-radius: 5px;
+         padding:1.2ch;
+
+         .title {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+
+            span {
+               display: flex;
+               flex:1;
+               color:white;
+            }
+
+            span:first-child() {
+               justify-content: flex-start;
+            }
+
+            span:nth-child(2) {
+               justify-content: center;
+            }
+
+            span:nth-child(3) {
+               justify-content: flex-end;
+            }
+         }
+
+         .scoreItem {
+            display: flex;
+            flex-wrap: wrap;
+
+            p {
+               display: flex;
+               font-size: 0.9rem;
+               flex:1;
+               color:#f4f6fa;
+               font-weight: 300;
+               padding:0.7ch 0;
+            }
+
+            p.score {
+               justify-content: flex-start;
+            }
+
+            p.time {
+               justify-content: center;
+            }
+
+            p.date {
+               justify-content: flex-end;
+            }
+         }
+      }
+   }
+
+   .UserScoreCard-img {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding:1.5rem;
+      width:25%;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      background-color: #26283b;
+      flex:1;
+      border-right:5px solid #3f4569;
+      border-top:5px solid #3f4569;
+      border-bottom:5px solid #3f4569;
+
+      img {
+         border-top-left-radius: 5px;
+         border-bottom-right-radius: 5px;
+         max-width: 85%;
+      }
+   }
+}
+
+
+@media only screen and (max-width: 480px) {
+   .scoreCard {
+      flex-direction: column;
+
+      .scoreCard-info {
+         flex:1;
+         width:100%;
+         padding:1.5rem;
+      }
+
+      .scoreCard-img {
+         display: none;
+      }
+   }
+}
