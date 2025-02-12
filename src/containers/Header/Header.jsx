@@ -78,7 +78,7 @@ const Header = () => {
          <header>
             <div className="container">
                <div className="logo">
-                  <img src="http://qwizzy.local/wp-content/uploads/2025/01/qwizzy-logo.png" alt="Qwizzy Logo" />Qwizzy</div>
+                  <Link to="/"><img src="http://qwizzy.local/wp-content/uploads/2025/01/qwizzy-logo.png" alt="Qwizzy Logo" />Qwizzy</Link></div>
                <ul>
                   {isLoggedIn ? (
                      <>
