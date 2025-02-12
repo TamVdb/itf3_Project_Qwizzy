@@ -1,4 +1,4 @@
-.scoreCard {
+.ScoreCard {
    display: flex;
    justify-content: space-between;
    flex-wrap: wrap;
@@ -11,7 +11,7 @@
    min-height:200px;
    
 
-   .scoreCard-info {
+   .ScoreCard-info {
       display: flex;
       flex-direction: column;
       flex:2;
@@ -98,23 +98,25 @@
       }
    }
 
-   .scoreCard-img {
+   .ScoreCard-img {
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
       padding:1.5rem;
       width:25%;
       border-top-right-radius: 10px;
       border-bottom-right-radius: 10px;
       background-color: #26283b;
       flex:1;
-      border-right:2px solid #3f4569;
-      border-top:2px solid #3f4569;
-      border-bottom:2px solid #3f4569;
+      border-right:5px solid #3f4569;
+      border-top:5px solid #3f4569;
+      border-bottom:5px solid #3f4569;
 
       img {
          border-top-left-radius: 5px;
-         border-bottom-right-radius: 5px;;
+         border-bottom-right-radius: 5px;
+         max-width: 85%;
       }
    }
 }

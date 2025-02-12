@@ -1,22 +1,24 @@
 import './ScoreCard.css';
 
-const ScoreCard = ({ quizId, title, difficulty, image, scores }) => {
+const ScoreCard = ({ quizId, username, title, difficulty, image, scores }) => {
 
    return (
-      <div className="scoreCard">
-         <div className="scoreCard-info">
+      <div className="ScoreCard">
+         <div className="ScoreCard-info">
             <div className="info">
                <h3>{title}</h3>
                <p>{difficulty}</p>
             </div>
             <div className="scores">
                <div className="title">
+                  <span>Pseudo</span>
                   <span>Score</span>
                   <span>Temps</span>
                   <span>Date</span>
                </div>
                {scores.map((score, index) => (
                   <div key={index} className="scoreItem">
+                     <p className="pseudo">{score.username}</p>
                      <p className="score">{score.score}%</p>
                      <p className="time">{score.time}s</p>
                      <p className="date">{score.date}</p>
@@ -24,7 +26,7 @@ const ScoreCard = ({ quizId, title, difficulty, image, scores }) => {
                ))}
             </div>
          </div>
-         <div className="scoreCard-img">
+         <div className="ScoreCard-img">
             <img src={image} alt="" />
          </div>
 
@@ -32,4 +34,4 @@ const ScoreCard = ({ quizId, title, difficulty, image, scores }) => {
    );
 };
 
-export default ScoreCard;
+export default UserScoreCard;
