@@ -11,7 +11,7 @@ header {
       max-width: 1280px;
       margin:auto;
 
-      .logo {
+      .logo a {
          color: #2D3047;
          font-size: 2rem;
          font-weight: bold;
