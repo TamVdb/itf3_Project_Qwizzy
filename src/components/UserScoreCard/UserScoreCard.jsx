@@ -13,12 +13,14 @@ const UserScoreCard = ({ quizId, title, difficulty, image, scores }) => {
                <div className="title">
                   <span>Score</span>
                   <span>Temps</span>
+                  <span>Points</span>
                   <span>Date</span>
                </div>
                {scores.map((score, index) => (
                   <div key={index} className="scoreItem">
                      <p className="score">{score.score}%</p>
                      <p className="time">{score.time}s</p>
+                     <p className="points">{score.points}</p>
                      <p className="date">{score.date}</p>
                   </div>
                ))}

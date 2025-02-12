@@ -9,7 +9,7 @@ const { VITE_URL_WP } = import.meta.env;
  * @returns
  */
 
-export async function createScoreboard(userId, quizId, finalScore, time, postTitle) {
+export async function createScoreboard(userId, quizId, scorePercent, time, finalScore, postTitle) {
 
    try {
       const token = localStorage.getItem('token');
@@ -19,14 +19,15 @@ export async function createScoreboard(userId, quizId, finalScore, time, postTit
          return false;
       }
 
-      const postTitle = `Quiz ${quizId} - User ${userId} - Score ${finalScore}%`;
+      const postTitle = `Quiz ${quizId} - User ${userId} - Score ${finalScore}`;
 
       const scoreboard = {
          title: postTitle,
          user: userId,
          related_quiz: quizId,
-         score: finalScore,
+         score: scorePercent,
          time: time,
+         points: finalScore,
          status: "publish"
       };
 
@@ -85,6 +86,7 @@ export async function getAllScoreBoard() {
          groupedByQuiz[quizId].scores.push({
             id: scoreboard.id,
             score: scoreboard.score,
+            points: scoreboard.points,
             time: scoreboard.time,
             date: scoreboard.date
          });
@@ -92,11 +94,15 @@ export async function getAllScoreBoard() {
          // Format the date for french locale
          groupedByQuiz[quizId].scores.forEach(score => {
             const date = new Date(score.date);
-            score.date = date.toLocaleDateString('fr-FR', {
-               day: '2-digit',
-               month: '2-digit',
-               year: 'numeric'
-            });
+            if (!isNaN(date.getTime())) {
+               score.date = date.toLocaleDateString('fr-FR', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric'
+               });
+            } else {
+               console.error("Date invalide:", score.date); // Si la date est invalide
+            }
          });
       });
 
@@ -145,6 +151,7 @@ export async function getScoreBoardByUser(userId) {
          groupedByQuiz[quizId].scores.push({
             id: scoreboard.id,
             score: scoreboard.score,
+            points: scoreboard.points,
             time: scoreboard.time,
             date: scoreboard.date
          });
@@ -152,11 +159,15 @@ export async function getScoreBoardByUser(userId) {
          // Format the date for french locale
          groupedByQuiz[quizId].scores.forEach(score => {
             const date = new Date(score.date);
-            score.date = date.toLocaleDateString('fr-FR', {
-               day: '2-digit',
-               month: '2-digit',
-               year: 'numeric'
-            });
+            if (!isNaN(date.getTime())) {
+               score.date = date.toLocaleDateString('fr-FR', {
+                  day: '2-digit',
+                  month: '2-digit',
+                  year: 'numeric'
+               });
+            } else {
+               console.error("Date invalide:", score.date); // Si la date est invalide
+            }
          });
       });
 

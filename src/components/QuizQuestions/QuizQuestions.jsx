@@ -78,8 +78,7 @@ const QuizQuestions = () => {
       // Post scoreboard if user is logged in
       if (userId) {
          try {
-            const createdScoreboard = createScoreboard(userId, id, finalScore, elapsedTime);
-            console.log(createdScoreboard);
+            const createdScoreboard = createScoreboard(userId, id, scorePercent, finalScore, elapsedTime);
          } catch (error) {
             console.error('Error creating scoreboard:', error);
          }
@@ -135,8 +134,15 @@ const QuizQuestions = () => {
       }, 1000);
    };
 
-   // Score en pourcentage et arrondis
-   const finalScore = Math.round((score / questions.length) * 100);
+   // Score percentage
+   const scorePercent = Math.round((score / questions.length) * 100);
+
+   // Penalty factor
+   const penalty = 0.2;
+
+   // Calculate final score
+   const finalScore = Math.round(scorePercent - (penalty * elapsedTime));
+
    const feedbackMessage = getFeedbackMessage();
 
    return (
@@ -145,10 +151,12 @@ const QuizQuestions = () => {
             <div className="quiz-end-container">
                <h2>{feedbackMessage}</h2>
                <p>Tu as {score} bonne(s) réponse(s) sur {questions.length}</p>
-               <p className="end-title">Score final</p>
-               <span className="accent">{finalScore}%</span>
+               <p className="end-title">Score en pourcentage</p>
+               <span className="accent">{scorePercent}%</span>
                <p className="end-title">Temps total</p>
                <span className="accent">{elapsedTime} secondes</span>
+               <p className="end-title">Ton score final</p>
+               <span className="accent">{finalScore}</span>
             </div>
          ) : (
             <div className="quiz-container">
@@ -165,9 +173,6 @@ const QuizQuestions = () => {
                {isCorrect === true && <p className="correct">Bonne réponse ! ✅</p>}
                {isCorrect === false && <p className="incorrect">❌ La bonne réponse est : {currentQuestion.reponse_fr}</p>}
 
-               {/* {!isPlaying && (
-                  <button onClick={handleStartQuiz}>Démarrer le quiz</button>
-               )} */}
                {timerActive && <p>Temps écoulé : {elapsedTime} secondes</p>}
             </div>
          )}
