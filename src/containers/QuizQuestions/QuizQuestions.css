@@ -1,0 +1,21 @@
+.return {
+   display: flex;
+   justify-content: center;
+
+   .returnButton {
+      border-radius: 1ch;
+      padding:1ch 2ch;
+      border:none;
+      background-color: #B81365;
+      font-size: 1.1rem;
+      cursor: pointer;
+      color:white;
+      text-decoration: inherit !important;
+      margin: auto;
+
+      &:hover,
+      &:focus {
+         background-color: rgba(184, 19, 101, 0.9);
+      }
+   }
+}
