@@ -49,11 +49,6 @@ header {
                &:hover {
                   color: #000000;
                }
-
-               &:focus,
-               &:focus-visible {
-               outline: none;
-               }
             }
          }
 
@@ -73,11 +68,6 @@ header {
                font-weight:500;
                transition: color 0.2s ease;
                display: flex;
-
-               &:focus,
-               &:focus-visible {
-               outline: none;
-               }
             }
          }
 
@@ -100,11 +90,6 @@ header {
 
                &:hover {
                   color: #000000;
-               }
-
-               &:focus,
-               &:focus-visible {
-               outline: none;
                }
             }
          }

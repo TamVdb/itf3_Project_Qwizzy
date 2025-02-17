@@ -57,3 +57,10 @@ h3 {
 button {
    transition: all 0.3ms ease;
 }
+
+li a {
+   &:focus,
+   &:focus-visible {
+   outline: none;
+   }
+}
