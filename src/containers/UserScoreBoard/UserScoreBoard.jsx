@@ -38,7 +38,7 @@ const UserScoreBoard = () => {
                      />
                   ))
                ) : (
-                  <p>Tu n'as pas encore joué à un quizz !</p>
+                  <p className="message">Tu n'as pas encore joué à un quizz !</p>
                )}
             </div>
          </div>
