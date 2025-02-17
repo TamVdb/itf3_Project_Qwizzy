@@ -17,7 +17,7 @@
       gap: 2rem;
       margin: auto;
 
-      p {
+      p.message {
          color:white;
          margin: auto;
       }
@@ -26,6 +26,7 @@
 
 .best {
    background-color: #419d78;
+   border-radius: 2px;
 }
 
 @media only screen and (max-width: 1024px) {
