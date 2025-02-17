@@ -98,7 +98,11 @@ export async function getAllScoreBoard() {
                score.date = date.toLocaleDateString('fr-FR', {
                   day: '2-digit',
                   month: '2-digit',
-                  year: 'numeric'
+                  year: '2-digit'
+               }) + ' @ ' + date.toLocaleTimeString('fr-FR', {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                  hour12: false
                });
             } else {
                console.error("Date invalide:", score.date); // Si la date est invalide
@@ -157,14 +161,20 @@ export async function getScoreBoardByUser(userId) {
       });
 
       // Traiter les scores pour chaque quiz
+      // Retourne un tableau
+      // [
+      //    { name: "Quiz A", scores: [{ id: 1, points: 10 }, { id: 2, points: 15 }, { id: 3, points: 8 }, { id: 4, points: 20 }] },
+      //    { name: "Quiz B", scores: [{ id: 5, points: 5 }, { id: 6, points: 12 }, { id: 7, points: 9 }] }
+      // ]
       const formattedData = Object.values(groupedByQuiz).map(quiz => {
-         const bestScore = quiz.scores.reduce((max, score) => (score.points > max.points ? score : max), quiz.scores[0]); // Trouver le meilleur score
-         const lastThreeScores = quiz.scores.slice(0, 3); // Garder les 3 derniers scores (déjà triés en BDD)
+         // Parcourir les scores et trouver le meilleur
+         const bestScore = quiz.scores.reduce((max, score) => (score.points > max.points ? score : max), quiz.scores[0]);
+         const lastThreeScores = quiz.scores.slice(0, 3); // Garder les 3 derniers scores
 
          // Vérifier si le meilleur score est déjà dans les 3 derniers, sinon l'ajouter
          const scoresToDisplay = lastThreeScores.some(score => score.id === bestScore.id)
             ? lastThreeScores
-            : [bestScore, ...lastThreeScores].slice(0, 4); // Garder max 4 scores (meilleur + 3 derniers)
+            : [bestScore, ...lastThreeScores].slice(0, 3); // Garder max 3 scores (meilleur + 2 derniers)
 
          // Formatter la date pour l'affichage
          scoresToDisplay.forEach(score => {
@@ -173,7 +183,7 @@ export async function getScoreBoardByUser(userId) {
                score.date = date.toLocaleDateString('fr-FR', {
                   day: '2-digit',
                   month: '2-digit',
-                  year: 'numeric'
+                  year: '2-digit'
                });
             } else {
                console.error("Date invalide:", score.date);
