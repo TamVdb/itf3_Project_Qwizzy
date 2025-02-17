@@ -1,14 +1,26 @@
-.scoreboard-container h2 {
+.scoreboard-container {
+   h2 {
    text-align: center;
    color:#FFFBFF;
    margin:3rem 0;
+   }
+
+   .scoreboardList {
+      display: flex;
+      flex-direction: column;
+      max-width: 1280px;
+      width:100%;
+      gap: 3rem;
+      margin:auto;
+
+      p.message {
+         color:white;
+         margin: auto;
+      }
+   }
 }
 
-.scoreboardList {
-   display: flex;
-   flex-direction: column;
-   max-width: 1280px;
-   width:100%;
-   gap: 3rem;
-   margin:auto;
+.best {
+   background-color: #419d78;
+   border-radius: 2px;
 }

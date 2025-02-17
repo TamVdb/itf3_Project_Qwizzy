@@ -90,9 +90,21 @@ export async function getAllScoreBoard() {
             time: scoreboard.time,
             date: scoreboard.date
          });
+      });
+
+      // Filtrer les 20 derniers scores pour chaque quiz
+      const formattedData = Object.values(groupedByQuiz).map(quiz => {
+         // Parcourir les scores et trouver le meilleur
+         const bestScore = quiz.scores.reduce((max, score) => (score.points > max.points ? score : max), quiz.scores[0]);
+         const lastTwentyScores = quiz.scores.slice(0, 20);
+
+         // Vérifier si le meilleur score est déjà dans les 3 derniers, sinon l'ajouter
+         const scoresToDisplay = lastTwentyScores.some(score => score.id === bestScore.id)
+            ? lastTwentyScores
+            : [bestScore, ...lastTwentyScores].slice(0, 20);
 
          // Format the date for french locale
-         groupedByQuiz[quizId].scores.forEach(score => {
+         scoresToDisplay.forEach(score => {
             const date = new Date(score.date);
             if (!isNaN(date.getTime())) {
                score.date = date.toLocaleDateString('fr-FR', {
@@ -108,9 +120,11 @@ export async function getAllScoreBoard() {
                console.error("Date invalide:", score.date); // Si la date est invalide
             }
          });
+
+         return { ...quiz, scores: scoresToDisplay };
       });
 
-      return { data: Object.values(groupedByQuiz) };
+      return { data: formattedData };
 
    } catch (error) {
       console.error('Error fetching scoreboard:', error);

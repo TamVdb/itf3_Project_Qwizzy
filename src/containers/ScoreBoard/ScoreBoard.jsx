@@ -21,18 +21,21 @@ const ScoreBoard = () => {
          <div className="scoreboard-container">
             <h2>Scoreboard</h2>
             <div className="scoreboardList">
-               {scoreBoard.map((quiz) => (
-                  <ScoreCard
-                     key={quiz.quizId}
-                     username={quiz.username}
-                     quizId={quiz.quizId}
-                     title={quiz.title}
-                     difficulty={quiz.difficulty}
-                     image={quiz.image}
-                     scores={quiz.scores}
-                  />
-               ))
-               }
+               {scoreBoard && scoreBoard.length > 0 ? (
+                  scoreBoard.map((quiz) => (
+                     <ScoreCard
+                        key={quiz.quizId}
+                        username={quiz.username}
+                        quizId={quiz.quizId}
+                        title={quiz.title}
+                        difficulty={quiz.difficulty}
+                        image={quiz.image}
+                        scores={quiz.scores}
+                     />
+                  ))
+               ) : (
+                  <p className="message">Pas de scoreboards disponibles</p>
+               )}
             </div>
          </div>
       </>
