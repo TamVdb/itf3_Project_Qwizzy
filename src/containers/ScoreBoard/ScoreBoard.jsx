@@ -3,10 +3,7 @@ import { getAllScoreBoard } from '../../services/ScoreBoard.service';
 import ScoreCard from '../../components/ScoreCard/ScoreCard';
 import './ScoreBoard.css';
 
-import { FaAnglesLeft } from "react-icons/fa6";
-import { FaAngleLeft } from "react-icons/fa6";
-import { FaAnglesRight } from "react-icons/fa6";
-import { FaAngleRight } from "react-icons/fa6";
+import { FaAnglesLeft, FaAngleLeft, FaAngleRight, FaAnglesRight } from "react-icons/fa6";
 
 const ScoreBoard = () => {
 
