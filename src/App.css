@@ -56,6 +56,15 @@ h3 {
 
 button {
    transition: all 0.3ms ease;
+
+   &:hover {
+      transition: all 0.3ms ease;
+   }
+
+   &:focus,
+   &:focus-visible {
+   outline: none;
+   }
 }
 
 li a {
