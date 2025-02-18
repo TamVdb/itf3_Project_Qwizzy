@@ -70,3 +70,17 @@ p.switch {
       }
    }
 }
+
+.password-icon {
+   position: relative;
+
+   .eye-icon {
+      font-size:1.1rem;
+      color:#424242;
+      position:absolute;
+      cursor: pointer;
+      top: 50%;
+      right:0.75rem;
+      transform: translateY(-50%);
+   }
+}

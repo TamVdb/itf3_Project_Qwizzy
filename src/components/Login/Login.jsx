@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import { loginUser } from '../../services/Auth.service';
 import { useId } from 'react';
-import './Login.css';
 import { handleError } from '../../utilsToast';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { getCurrentUser } from '../../services/Auth.service';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+
+import './Login.css';
 
 const Login = ({ onSwitchToRegister, onSuccessfulConnection }) => {
 
    const [username, setUsername] = useState('');
    const [password, setPassword] = useState('');
+   const [showPassword, setShowPassword] = useState(false);
 
    const inputId = useId();
 
@@ -51,7 +54,20 @@ const Login = ({ onSwitchToRegister, onSuccessfulConnection }) => {
                </div>
                <div>
                   <label htmlFor='password'>Mot de passe</label>
-                  <input id={inputId + 'password'} type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                  <div className="password-icon">
+                     <input id={inputId + 'password'} type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} />
+                     {showPassword ? (
+                        <FaEye
+                           className="eye-icon"
+                           onClick={() => setShowPassword(!showPassword)}
+                        />
+                     ) : (
+                        <FaEyeSlash
+                           className="eye-icon"
+                           onClick={() => setShowPassword(!showPassword)}
+                        />
+                     )}
+                  </div>
                </div>
 
                <button type='submit'>Se connecter</button>

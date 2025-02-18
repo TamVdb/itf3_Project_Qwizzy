@@ -1,16 +1,19 @@
 import { useState } from 'react';
 import { registerUser } from '../../services/Auth.service';
 import { useId } from 'react';
-import './Register.css';
 import { handleSuccess, handleError } from '../../utilsToast';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+
+import './Register.css';
 
 const Register = ({ onSwitchToLogin }) => {
 
    const [username, setUsername] = useState('');
    const [email, setEmail] = useState('');
    const [password, setPassword] = useState('');
+   const [showPassword, setShowPassword] = useState(false);
 
    const inputId = useId();
 
@@ -46,7 +49,20 @@ const Register = ({ onSwitchToLogin }) => {
                </div>
                <div>
                   <label htmlFor='password'>Mot de passe</label>
-                  <input id={inputId + 'password'} type='password' value={password} onChange={(e) => setPassword(e.target.value)} />
+                  <div className="password-icon">
+                     <input id={inputId + 'password'} type={showPassword ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} />
+                     {showPassword ? (
+                        <FaEye
+                           className="eye-icon"
+                           onClick={() => setShowPassword(!showPassword)}
+                        />
+                     ) : (
+                        <FaEyeSlash
+                           className="eye-icon"
+                           onClick={() => setShowPassword(!showPassword)}
+                        />
+                     )}
+                  </div>
                </div>
 
                <button type='submit'>S'inscrire</button>
