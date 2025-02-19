@@ -57,23 +57,23 @@ const AddQuiz = () => {
 
          const quizData = {
             title,
+            status: "published",
             description,
             difficulty,
             vignette: { ID: vignetteId },
             user: user.id,
-            questions: questions
+            questions_du_quiz: questions,
          };
 
-         const quiz = await createQuiz(quizData);
-         console.log("Quiz created:", quiz);
+         const quizId = await createQuiz(quizData); // Récupérer l'ID du quiz
+         console.log("Quiz created:", quizId);
 
-
-         if (quiz) {
+         if (quizId) {
             // Add questions related to the quiz
             for (const question of questions) {
                await createQuestion({
                   ...question,
-                  quiz: { post_title: quiz.title }
+                  quiz: [quizId]
                });
             }
 

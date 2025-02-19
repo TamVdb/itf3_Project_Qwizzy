@@ -84,7 +84,9 @@ export async function createQuiz(quiz) {
          description: quiz.description,
          difficulte: [quiz.difficulty],
          vignette: { ID: quiz.vignette.ID },
-         user: quiz.user
+         user: quiz.user,
+         questions_du_quiz: quiz.questions ? quiz.questions.map(q => q.ID) : [],
+         status: "publish",
       };
 
       const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/quizz', {
@@ -102,7 +104,8 @@ export async function createQuiz(quiz) {
       }
 
       const result = await response.json();
-      return result;
+      return result.id;
+
    } catch (error) {
       console.error('Error creating quiz:', error);
       return false;
@@ -123,7 +126,8 @@ export async function createQuestion(question) {
          reponse_fr: question.answerFR,
          reponse_en: question.answerEN,
          reponse_alternative: question.answerAlt,
-         quiz: { post_title: question.quiz }
+         quiz: question.quiz,
+         status: "publish"
       };
 
       const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/questions', {
