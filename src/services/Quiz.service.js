@@ -101,10 +101,48 @@ export async function createQuiz(quiz) {
          throw new Error('Failed to create quiz');
       }
 
-      return response.ok;
-
+      const result = await response.json();
+      return result;
    } catch (error) {
       console.error('Error creating quiz:', error);
+      return false;
+   }
+}
+
+export async function createQuestion(question) {
+   try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+         console.log('Token not found');
+         return false;
+      }
+
+      const body = {
+         title: question.question,
+         question: question.question,
+         reponse_fr: question.answerFR,
+         reponse_en: question.answerEN,
+         reponse_alternative: question.answerAlt,
+         quiz: { post_title: question.quiz }
+      };
+
+      const response = await fetch(VITE_URL_WP + 'wp-json/wp/v2/questions', {
+         method: 'POST',
+         headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+         },
+         body: JSON.stringify(body),
+         credentials: 'include',
+      });
+
+      if (!response.ok) {
+         throw new Error('Failed to create question');
+      }
+
+      return response.ok;
+   } catch (error) {
+      console.error('Error creating question:', error);
       return false;
    }
 }
