@@ -10,7 +10,7 @@ form.add-quiz-form {
    background-color: #19161d;
    padding:2rem;
    border-radius: 1rem;
-   max-width:400px;
+   max-width:500px;
    margin: auto;
    gap:2rem;
 
@@ -48,9 +48,27 @@ form.add-quiz-form {
 
       &:hover,
       &:focus,
-       &:focus-visible {
-         background-color: rgba(65, 157, 120, 0.9);
+      &:focus-visible {
+         background-color: #5cab88;
          outline:none;
       }
+
+      &:disabled {
+         cursor:not-allowed;
+         background-color: #3f4569;
+      }
+   }
+
+   .error {
+      text-align: left;
+      font-size:0.9rem;
+      padding-top:0.5rem;
+      margin-bottom:0; 
+      color: #B81365;
+   }
+
+   .required {
+      color: #B81365;
+      padding-left:0.2rem;
    }
 }
