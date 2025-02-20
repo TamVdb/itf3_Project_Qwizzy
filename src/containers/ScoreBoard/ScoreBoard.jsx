@@ -4,13 +4,11 @@ import ScoreCard from '../../components/ScoreCard/ScoreCard';
 import Pagination from '../../components/Pagination/Pagination';
 import './ScoreBoard.css';
 
-import { FaAnglesLeft, FaAngleLeft, FaAngleRight, FaAnglesRight } from "react-icons/fa6";
-
 const ScoreBoard = () => {
 
    const [scoreBoard, setScoreBoard] = useState([]);
    const [currentPage, setCurrentPage] = useState(1);
-   const cardsPerPage = 1;
+   const cardsPerPage = 2;
 
    // Get all scoreboards
    useEffect(() => {
