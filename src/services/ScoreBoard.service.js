@@ -75,7 +75,7 @@ export async function getAllScoreBoard() {
          if (!groupedByQuiz[quizId]) {
             groupedByQuiz[quizId] = {
                quizId,
-               username: scoreboard.user[0].display_name,
+               // username: scoreboard.user[0].display_name,
                title: scoreboard.related_quiz[0].post_title,
                difficulty: scoreboard.related_quiz[0].difficulte,
                image: scoreboard.related_quiz[0].vignette,
@@ -85,6 +85,7 @@ export async function getAllScoreBoard() {
 
          groupedByQuiz[quizId].scores.push({
             id: scoreboard.id,
+            username: scoreboard.user[0].display_name,
             score: scoreboard.score,
             points: scoreboard.points,
             time: scoreboard.time,

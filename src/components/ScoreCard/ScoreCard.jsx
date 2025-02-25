@@ -1,6 +1,6 @@
 import './ScoreCard.css';
 
-const ScoreCard = ({ quizId, username, title, difficulty, image, scores }) => {
+const ScoreCard = ({ quizId, title, difficulty, image, scores }) => {
 
    // Fin the highest score
    const bestScore = scores.reduce((max, score) => (score.points > max.points ? score : max), scores[0]);
@@ -22,7 +22,7 @@ const ScoreCard = ({ quizId, username, title, difficulty, image, scores }) => {
                </div>
                {scores.map((score, index) => (
                   <div key={index} className={`scoreItem ${score.id === bestScore.id ? 'best' : ''}`}>
-                     <p className="pseudo">{username}</p>
+                     <p className="pseudo">{score.username}</p>
                      <p className="score">{score.score}%</p>
                      <p className="time">{score.time}s</p>
                      <p className="points">{score.points}</p>
