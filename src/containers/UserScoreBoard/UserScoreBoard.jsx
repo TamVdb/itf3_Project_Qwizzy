@@ -3,6 +3,7 @@ import { getScoreBoardByUser } from '../../services/ScoreBoard.service';
 import UserScoreCard from '../../components/UserScoreCard/UserScoreCard';
 import './UserScoreBoard.css';
 import { useParams } from 'react-router-dom';
+import Loader from '../../components/Loader/Loader';
 
 const UserScoreBoard = () => {
 
@@ -38,7 +39,7 @@ const UserScoreBoard = () => {
                      />
                   ))
                ) : (
-                  <p className="message">Tu n'as pas encore joué à un quizz !</p>
+                  <Loader />
                )}
             </div>
          </div>

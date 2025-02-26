@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { getQuizById } from '../../services/Quiz.service';
 import QuizQuestion from '../../components/QuizQuestion/QuizQuestion';
 import ResultScreen from '../ResultScreen/ResultScreen';
+import Loader from '../../components/Loader/Loader';
 import './QuizQuestions.css';
 
 const QuizQuestions = () => {
@@ -25,18 +26,6 @@ const QuizQuestions = () => {
          .catch((error) => console.error('Error fetching quiz:', error));
    }, [id]);
 
-   // // Get current user ID from local storage
-   // useEffect(() => {
-   //    const token = localStorage.getItem('token');
-   //    if (token) {
-   //       getCurrentUser(token)
-   //          .then((result) => {
-   //             setUserId(result.id);
-   //          })
-   //          .catch((error) => console.error('Error fetching current user:', error));
-   //    }
-   // }, []);
-
    // Update elapsed time when the timer is active
    useEffect(() => {
       let interval;
@@ -49,18 +38,6 @@ const QuizQuestions = () => {
       }
       return () => clearInterval(interval);
    }, [timerActive, elapsedTime]);
-
-   // // Calculate score data
-   // const calculScore = () => {
-   //    console.log(score, questions.length);
-
-   //    const scorePercent = Math.round((score / questions.length) * 100);
-   //    console.log(scorePercent);
-
-   //    const penalty = 0.2;
-   //    const finalScore = Math.round(scorePercent - (penalty * elapsedTime));
-   //    setScoreData({ scorePercent, finalScore });
-   // };
 
    // Handle start quiz
    const handleStartQuiz = () => {
@@ -87,7 +64,7 @@ const QuizQuestions = () => {
    };
 
    if (questions.length === 0 || !questions[currentQuestionIndex]) {
-      return <p>Chargement...</p>;
+      return <Loader />;
    }
 
    const currentQuestion = questions[currentQuestionIndex];

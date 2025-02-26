@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getAllQuizz } from '../../services/Quiz.service';
 import QuizCard from '../../components/QuizCard/QuizCard';
+import Loader from '../../components/Loader/Loader';
 import './QuizList.css';
 
 const QuizList = () => {
@@ -29,6 +30,7 @@ const QuizList = () => {
       <>
          <div className="quizList-container">
             <h2>Quiz List</h2>
+            {quizz.length === 0 && <Loader />}
             <div className="quizList">
                {quizz.map((quiz) => (
                   <QuizCard

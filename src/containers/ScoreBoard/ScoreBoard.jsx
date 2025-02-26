@@ -3,6 +3,7 @@ import { getAllScoreBoard } from '../../services/ScoreBoard.service';
 import ScoreCard from '../../components/ScoreCard/ScoreCard';
 import Pagination from '../../components/Pagination/Pagination';
 import './ScoreBoard.css';
+import Loader from '../../components/Loader/Loader';
 
 const ScoreBoard = () => {
 
@@ -52,7 +53,7 @@ const ScoreBoard = () => {
                      />
                   ))
                ) : (
-                  <p className="message">Pas de scoreboards disponibles</p>
+                  < Loader />
                )}
             </div>
 
