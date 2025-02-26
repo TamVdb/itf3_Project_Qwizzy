@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { getQuizById } from '../../services/Quiz.service';
-import { getCurrentUser } from '../../services/Auth.service';
-import { createScoreboard } from '../../services/ScoreBoard.service';
 import QuizQuestion from '../../components/QuizQuestion/QuizQuestion';
 import ResultScreen from '../ResultScreen/ResultScreen';
 import './QuizQuestions.css';
@@ -17,8 +15,6 @@ const QuizQuestions = () => {
    const [isGameOver, setIsGameOver] = useState(false);
    const [elapsedTime, setElapsedTime] = useState(0);
    const [timerActive, setTimerActive] = useState(false);
-   const [userId, setUserId] = useState(null);
-   const [scoreData, setScoreData] = useState({ scorePercent: 0, finalScore: 0 });
 
    // Fetch questions for the quiz
    useEffect(() => {
@@ -29,17 +25,17 @@ const QuizQuestions = () => {
          .catch((error) => console.error('Error fetching quiz:', error));
    }, [id]);
 
-   // Get current user ID from local storage
-   useEffect(() => {
-      const token = localStorage.getItem('token');
-      if (token) {
-         getCurrentUser(token)
-            .then((result) => {
-               setUserId(result.id);
-            })
-            .catch((error) => console.error('Error fetching current user:', error));
-      }
-   }, []);
+   // // Get current user ID from local storage
+   // useEffect(() => {
+   //    const token = localStorage.getItem('token');
+   //    if (token) {
+   //       getCurrentUser(token)
+   //          .then((result) => {
+   //             setUserId(result.id);
+   //          })
+   //          .catch((error) => console.error('Error fetching current user:', error));
+   //    }
+   // }, []);
 
    // Update elapsed time when the timer is active
    useEffect(() => {
@@ -54,14 +50,17 @@ const QuizQuestions = () => {
       return () => clearInterval(interval);
    }, [timerActive, elapsedTime]);
 
-   // Calculate score data
-   const calculScore = () => {
-      const scorePercent = Math.round((score / questions.length) * 100);
-      const penalty = 0.2;
-      const finalScore = Math.round(scorePercent - (penalty * elapsedTime));
-      setScoreData({ scorePercent, finalScore });
-      return { scorePercent, finalScore };
-   };
+   // // Calculate score data
+   // const calculScore = () => {
+   //    console.log(score, questions.length);
+
+   //    const scorePercent = Math.round((score / questions.length) * 100);
+   //    console.log(scorePercent);
+
+   //    const penalty = 0.2;
+   //    const finalScore = Math.round(scorePercent - (penalty * elapsedTime));
+   //    setScoreData({ scorePercent, finalScore });
+   // };
 
    // Handle start quiz
    const handleStartQuiz = () => {
@@ -71,22 +70,18 @@ const QuizQuestions = () => {
 
    // Handle answer submission
    const handleAnswerSubmit = (isCorrect) => {
+
       if (isCorrect) {
          setScore((prevScore) => prevScore + 1);
       }
 
       setTimeout(() => {
+
          if (currentQuestionIndex + 1 < questions.length) {
             setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
          } else {
             setTimerActive(false); // Stop the timer before calculating final scores
-            const { scorePercent, finalScore } = calculScore();
             setIsGameOver(true);
-
-            if (userId) {
-               createScoreboard(userId, id, scorePercent, elapsedTime, finalScore)
-                  .catch((error) => console.error('Error creating scoreboard:', error));
-            }
          }
       }, 1000);
    };
@@ -104,7 +99,7 @@ const QuizQuestions = () => {
                score={score}
                totalQuestions={questions.length}
                elapsedTime={elapsedTime}
-               scoreData={scoreData}
+               id={id}
             />
          ) : (
             <QuizQuestion
