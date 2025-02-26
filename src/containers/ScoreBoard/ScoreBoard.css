@@ -1,8 +1,11 @@
 .scoreboard-container {
+   padding:3rem 0;
+   flex-grow: 1;
+   
    h2 {
-   text-align: center;
-   color:#FFFBFF;
-   margin:3rem 0;
+      text-align: center;
+      color:#FFFBFF;
+      margin-bottom:3rem;
    }
 
    .scoreboardList {

@@ -1,7 +1,11 @@
-.add-quiz-container h2 {
-   padding:3rem 0 2rem;
-   text-align: center;
-   color:#FFFBFF;
+.add-quiz-container {
+   flex-grow: 1;
+   padding:3rem 0;
+   h2 {
+      text-align: center;
+      color:#FFFBFF;
+      margin-bottom:3rem;
+   }
 }
 
 form.add-quiz-form {

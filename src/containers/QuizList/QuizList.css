@@ -1,7 +1,11 @@
-.quizList-container h2 {
-   text-align: center;
-   color:#FFFBFF;
-   margin:3rem 0;
+.quizList-container {
+   flex-grow: 1;
+   padding:3rem 0;
+   h2 {
+      text-align: center;
+      color:#FFFBFF;
+      margin-bottom:3rem;
+   }
 }
 
 .quizList {

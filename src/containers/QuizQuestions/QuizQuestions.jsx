@@ -71,29 +71,29 @@ const QuizQuestions = () => {
 
    return (
       <>
-         {isGameOver ? (
-            <ResultScreen
-               score={score}
-               totalQuestions={questions.length}
-               elapsedTime={elapsedTime}
-               id={id}
-            />
-         ) : (
-            <QuizQuestion
-               question={currentQuestion}
-               currentQuestionIndex={currentQuestionIndex}
-               totalQuestions={questions.length}
-               onAnswerSubmit={handleAnswerSubmit}
-               onStartQuiz={handleStartQuiz}
-               isPlaying={isPlaying}
-               elapsedTime={elapsedTime}
-            />
-         )}
-         <div className="return">
-            <Link to={'/'} className="returnButton">Retour aux quizz</Link>
-         </div>
-
-      </>
+         <div className="quiz-questions-container">
+            {isGameOver ? (
+               <ResultScreen
+                  score={score}
+                  totalQuestions={questions.length}
+                  elapsedTime={elapsedTime}
+                  id={id}
+               />
+            ) : (
+               <QuizQuestion
+                  question={currentQuestion}
+                  currentQuestionIndex={currentQuestionIndex}
+                  totalQuestions={questions.length}
+                  onAnswerSubmit={handleAnswerSubmit}
+                  onStartQuiz={handleStartQuiz}
+                  isPlaying={isPlaying}
+                  elapsedTime={elapsedTime}
+               />
+            )}
+            <div className="return">
+               <Link to={'/'} className="returnButton">Retour aux quizz</Link>
+            </div>
+         </div>      </>
    );
 };
 

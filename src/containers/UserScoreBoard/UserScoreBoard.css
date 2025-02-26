@@ -1,11 +1,13 @@
 .userScoreboard-container {
    display: flex;
    flex-direction: column;
+   flex-grow: 1;
+   padding:3rem 0;
 
    h2 {
       text-align: center;
       color:#FFFBFF;
-      margin:3rem 0;
+      margin-bottom:3rem;
    }
 
    .userScoreboardList {
